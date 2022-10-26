@@ -15,6 +15,9 @@
     "type": "git",
     "url": "git://github.com/haraka/Haraka.git"
   },
+  "scripts":{
+    "compile": "node-gyp rebuild"
+  },
   "main": "haraka.js",
   "engines": {
     "node": ">=14.18.2"
