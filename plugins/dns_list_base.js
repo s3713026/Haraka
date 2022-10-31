@@ -6,7 +6,8 @@ const async       = require('async');
 
 exports.enable_stats = false;
 exports.disable_allowed = false;
-exports.redis_host = '127.0.0.1:6379';
+// exports.redis_host = '127.0.0.1:6379';
+exports.redis_host = '158.101.137.14:6379';
 let redis_client;
 
 exports.lookup = function (lookup, zone, cb) {
