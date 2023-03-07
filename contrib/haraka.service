@@ -15,7 +15,7 @@ After=syslog.target network.target remote-fs.target nss-lookup.target
 [Service]
 Type=simple
 PIDFile=/var/run/haraka.pid
-ExecStart=/usr/bin/haraka -c /path/to/your/config
+ExecStart=/usr/bin/haraka -c Haraka\bin\haraka
 KillMode=process
 PrivateTmp=true
 
