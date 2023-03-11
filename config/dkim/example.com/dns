@@ -1,0 +1,32 @@
+
+Add this TXT record to the example.com DNS zone.
+
+mar2023._domainkey    IN   TXT   v=DKIM1;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3/4u4XatjGmiFIz+tsXfvqRXGVUYtZ1Bgd0vKhi5Rwj4GRbloqIaobZdHNifnVCPpMHKTA9MKEcHSqwuO6umjAu0wudV2fYFjOVTAcpwSzis8SX/Ong9fbq3wQSuRscRGAuhBnPsbRQzyR43qN3dIStfFHrWlA+Ly3LSh0CL6NGaZqNJz5BgBIq5I8w4ipAKsE9kCZFPEyIgTSit2KJPQAWPXveQDw+4Ap4L52S0GITQaHS182+65yTAE+SVfIH2txaJgLjSin1xfJvEEB2Gz9+9GaQ3LXZXIWAtbQe13/h++hjp/EqB5qcPY2i2Ms2G+agKO3Ri4wnD6V6z6aMdcwIDAQAB
+
+
+BIND zone file formatted:
+
+mar2023._domainkey    IN   TXT (
+	"v=DKIM1;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3/4u4XatjGmiFIz+tsXfvqRXGVUYtZ1Bgd0vKhi5Rwj4GRbloqIaobZd"
+	"HNifnVCPpMHKTA9MKEcHSqwuO6umjAu0wudV2fYFjOVTAcpwSzis8SX/Ong9fbq3wQSuRscRGAuhBnPsbRQzyR43qN3dIStfFHrWlA+Ly3LSh0"
+	"CL6NGaZqNJz5BgBIq5I8w4ipAKsE9kCZFPEyIgTSit2KJPQAWPXveQDw+4Ap4L52S0GITQaHS182+65yTAE+SVfIH2txaJgLjSin1xfJvEEB2G"
+	"z9+9GaQ3LXZXIWAtbQe13/h++hjp/EqB5qcPY2i2Ms2G+agKO3Ri4wnD6V6z6aMdcwIDAQAB"
+        )
+
+Tell the world that the ONLY mail servers that send mail from this domain are DKIM signed and/or bear our MX and A records.
+
+With SPF:
+
+        SPF "v=spf1 mx a -all"
+        TXT "v=spf1 mx a -all"
+
+With DMARC:
+
+_dmarc  TXT "v=DMARC1; p=reject; adkim=s; aspf=r; rua=mailto:dmarc-feedback@example.com; ruf=mailto:dmarc-feedback@example.com; pct=100"
+
+For more information about DKIM and SPF policy,
+the documentation within each plugin contains a longer discussion and links to more detailed information:
+
+   haraka -h dkim_sign
+   haraka -h spf
+
