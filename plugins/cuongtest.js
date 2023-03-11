@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 exports.register = function() {
-    this.logfile = fs.createWriteStream('Haraka/swaks.log', { flags: 'a' });
+    this.logfile = fs.createWriteStream('swaks.log', { flags: 'a' });
 };
 
 exports.hook_data_post = function(next, connection) {
