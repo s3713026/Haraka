@@ -8,7 +8,7 @@ let transporter = nodemailer.createTransport({
     secure: false, // true for 465, false for other ports
 });
 let mailOptions = {
-    from: '"Sender Name" <cuong.test@demo.akadigital.net>', // sender address
+    from: 'cuong.test@demo.akadigital.net', // sender address
     to: 'cuong.truong@akadigital.vn', // list of receivers
     subject: 'Hello from Haraka!', // Subject line
     text: 'Hello world!', // plain text body
