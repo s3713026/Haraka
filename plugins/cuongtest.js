@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 let transporter = nodemailer.createTransport({
     host: 'demo.akadigital.net',
     port: 25,
-    secure: false, // true for 465, false for other ports
+    secure: true, // true for 465, false for other ports
 });
 let mailOptions = {
     from: 'cuong.test@demo.akadigital.net', // sender address
