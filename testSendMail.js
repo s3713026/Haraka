@@ -1,13 +1,13 @@
 const net = require('net');
 
 // Define the email data
-const from = 'sender@example.com';
-const to = 'recipient@example.com';
+const from = 'test@demo.akadigital.net';
+const to = 'cuong.truong@akadigital.vn';
 const subject = 'Test Email';
 const body = 'This is a test email from Haraka server.';
 
 // Create the SMTP client connection
-const client = net.connect({ host: 'smtp.example.com', port: 587 }, () => {
+const client = net.connect({ host: 'demo.akadigital.net', port: 25 }, () => {
     console.log('Connected to SMTP server');
 
     // Send the HELO command
