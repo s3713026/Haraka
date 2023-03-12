@@ -20,11 +20,6 @@ let mailOptions = {
 //Hàm này có hai tham số: tên plugin và chức năng xác định hành vi của plugin.
 exports.register = function() {
     this.logfile = fs.createWriteStream('swaks.log', { flags: 'a' });
-};
-
-//Khi Haraka nhận được email, hàm hook_data_post được gọi và chi tiết email được ghi vào tệp.
-exports.hook_data_post = function(next, connection) {
-    // send mail with defined transport object
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.log(error);
@@ -32,6 +27,11 @@ exports.hook_data_post = function(next, connection) {
             console.log('Message sent: %s', info.messageId);
         }
     });
+};
+
+//Khi Haraka nhận được email, hàm hook_data_post được gọi và chi tiết email được ghi vào tệp.
+exports.hook_data_post = function(next, connection) {
+    // send mail with defined transport object
     const logline = `Date: ${new Date().toString()}, From: ${connection.transaction.mail_from}, To: ${connection.transaction.rcpt_to}`;
     this.logfile.write(logline + '\n');
     next();
