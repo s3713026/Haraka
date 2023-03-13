@@ -10,13 +10,13 @@ exports.send_email = function(next, connection) {
     // var body = connection.transaction.message_stream.get_data();
 
     var transporter = nodemailer.createTransport({
-        host: 'demo.akadigital.net',
+        host: '158.101.137.14',
         port: 25,
-        secure: true,
-        auth: {
-            user: 'cuong@demo.akadigital.com',
-            pass: 'password2'
-        }
+        // secure: true,
+        // auth: {
+        //     user: 'cuong@demo.akadigital.com',
+        //     pass: 'password2'
+        // }
     });
 
     var mailOptions = {
