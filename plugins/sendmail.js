@@ -9,19 +9,19 @@ exports.send_email = function(next, connection) {
     // var rcpt_to = connection.transaction.rcpt_to;
     // var body = connection.transaction.message_stream.get_data();
 
-    // var transporter = nodemailer.createTransport({
-    //     host: 'demo.akadigital.net',
-    //     port: 25,
-    //     secure: true,
-    //     auth: {
-    //         user: 'cuong@demo.akadigital.com',
-    //         pass: 'password2'
-    //     }
-    // });
+    var transporter = nodemailer.createTransport({
+        host: 'demo.akadigital.net',
+        port: 25,
+        secure: true,
+        auth: {
+            user: 'cuong@demo.akadigital.com',
+            pass: 'password2'
+        }
+    });
 
     var mailOptions = {
         from: 'mail_from@demo.akadigital',
-        to: 'phucuong200297@gmail.com',
+        to: 'cuong.truong@akadigital.vn',
         subject: 'Test email from Haraka',
         text: 'body'
     };
