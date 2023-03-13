@@ -5,7 +5,7 @@ exports.register = function() {
 }
 
 exports.send_email = function(next, connection) {
-    console.log("HELLO CHAYJ ROOI")
+    this.loginfo("HELLO CHAYJ ROOI")
         // var mail_from = connection.transaction.mail_from;
         // var rcpt_to = connection.transaction.rcpt_to;
         // var body = connection.transaction.message_stream.get_data();
