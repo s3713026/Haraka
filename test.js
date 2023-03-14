@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer');
 let transporter = nodemailer.createTransport({
     host: '158.101.137.14',
     port: 25,
-    secure: true // true for 465, false for other ports
+    secure: false // true for 465, false for other ports
 });
 
 // setup email data with unicode symbols
