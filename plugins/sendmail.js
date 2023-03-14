@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 exports.register = function() {
     this.loginfo("HELLO CHAYJ ROOI")
-    this.register_hook('queue', 'send_email');
+        // this.register_hook('queue', 'send_email');
     var transporter = nodemailer.createTransport({
         host: '158.101.137.14',
         port: 25,
@@ -11,7 +11,7 @@ exports.register = function() {
 
     var mailOptions = {
         from: 'mail_from@demo.akadigital.net',
-        to: 'cuong.truong@akadigital.vn',
+        to: 'phucuong200297@gmail.com',
         subject: 'Test email from Haraka',
         text: 'body',
         html: '<b>Hello world?</b>'
