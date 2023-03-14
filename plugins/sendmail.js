@@ -19,9 +19,9 @@ exports.register = function() {
 
     transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
-            this.loginfo(error);
+            console.log(error);
         } else {
-            this.loginfo('Email sent: ' + info.response);
+            console.log('Email sent: ' + info.response);
         }
     });
 
