@@ -1,14 +1,14 @@
 const nodemailer = require('nodemailer');
 
 exports.register = function() {
+    this.loginfo("HELLO CHAYJ ROOI")
     this.register_hook('queue', 'send_email');
 }
 
 exports.send_email = function(next, connection) {
-    this.loginfo("HELLO CHAYJ ROOI")
-        // var mail_from = connection.transaction.mail_from;
-        // var rcpt_to = connection.transaction.rcpt_to;
-        // var body = connection.transaction.message_stream.get_data();
+    // var mail_from = connection.transaction.mail_from;
+    // var rcpt_to = connection.transaction.rcpt_to;
+    // var body = connection.transaction.message_stream.get_data();
 
     var transporter = nodemailer.createTransport({
         host: '158.101.137.14',
