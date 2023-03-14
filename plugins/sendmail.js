@@ -27,7 +27,7 @@ exports.register = function() {
             console.log('Email sent: ' + info.response);
         }
     });
-    next()
+
 }
 
 // exports.send_email = function(next, connection) {
