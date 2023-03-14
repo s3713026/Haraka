@@ -6,18 +6,15 @@ exports.register = function() {
     var transporter = nodemailer.createTransport({
         host: '158.101.137.14',
         port: 25,
-        // secure: true,
-        // auth: {
-        //     user: 'cuong@demo.akadigital.com',
-        //     pass: 'password2'
-        // }
+        secure: true
     });
 
     var mailOptions = {
-        from: 'mail_from@demo.akadigital',
+        from: 'mail_from@demo.akadigital.net',
         to: 'cuong.truong@akadigital.vn',
         subject: 'Test email from Haraka',
-        text: 'body'
+        text: 'body',
+        html: '<b>Hello world?</b>'
     };
 
     transporter.sendMail(mailOptions, function(error, info) {
