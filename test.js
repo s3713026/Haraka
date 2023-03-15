@@ -2,12 +2,11 @@ const nodemailer = require('nodemailer');
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
-    host: 'demo.akadigital.net',
-    port: 587,
+    host: 'localhost',
+    port: 25,
     secure: false, // true for 465, false for other ports
-    auth: {
-        user: 'username1', // your Gmail email address
-        pass: 'akatestpassword' // your Gmail password
+    tls: {
+        rejectUnauthorized: false
     }
 });
 
