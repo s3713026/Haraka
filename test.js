@@ -6,8 +6,8 @@ let transporter = nodemailer.createTransport({
     port: 25,
     secure: false, // true for 465, false for other ports
     auth: {
-        user: 'cuong@demo.akadigital.com', // your Gmail email address
-        pass: 'password2' // your Gmail password
+        user: 'username1', // your Gmail email address
+        pass: 'akatestpassword' // your Gmail password
     }
 });
 
