@@ -13,7 +13,7 @@ let transporter = nodemailer.createTransport({
 // setup email data with unicode symbols
 let mailOptions = {
     from: 'mail_from@demo.akadigital.net',
-    to: 'phucuong200297@gmail.com',
+    to: 'cuong.truong@akadigital.vn',
     subject: 'Test email from Haraka',
     text: 'body',
     html: '<b>Hello world?</b>'
