@@ -8,11 +8,11 @@ let transporter = nodemailer.createTransport({
     auth: {
         user: 'username1',
         pass: 'akatestpassword'
-    },
-    tls: {
-        rejectUnauthorized: true
-            // secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
     }
+    // tls: {
+    //     rejectUnauthorized: true
+    //         // secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
+    // }
 });
 
 // setup email data with unicode symbols
