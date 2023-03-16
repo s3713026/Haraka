@@ -6,15 +6,15 @@ exports.register = function() {
     var transporter = nodemailer.createTransport({
         host: 'localhost',
         port: 25,
-        secure: true, // true for 465, false for other ports
+        // secure: true, // true for 465, false for other ports
         auth: {
             user: 'username1',
             pass: 'akatestpassword'
-        },
-        tls: {
-            rejectUnauthorized: false,
-            // secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
         }
+        // tls: {
+        //     rejectUnauthorized: false,
+        //     // secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
+        // }
     });
 
     var mailOptions = {
