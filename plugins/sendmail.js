@@ -1,69 +1,34 @@
-const nodemailer = require('nodemailer');
+var outbound = require('./outbound');
 
-exports.register = function() {
-    this.loginfo("HELLO CHAYJ ROOI")
-        // this.register_hook('queue', 'send_email');
-    var transporter = nodemailer.createTransport({
-        host: '158.101.137.14',
-        port: 25,
-        secure: true, // true for 465, false for other ports
-        auth: {
-            user: 'username1',
-            pass: 'akatestpassword'
-        },
-        tls: {
-            rejectUnauthorized: false,
-            // secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
-        }
-    });
+var plugin = this;
 
-    var mailOptions = {
-        from: 'test@demo.akadigital.net',
-        to: 'phucuong200297@gmail.com',
-        subject: 'Test email from Haraka',
-        text: 'body',
-        html: '<b>Hello world?</b>'
-    };
+var to = 'phucuong200297@gmail.com';
+var from = 'haraka@demo.akadigital.net';
 
-    transporter.sendMail(mailOptions, function(error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
+var contents = [
+    "From: " + from,
+    "To: " + to,
+    "MIME-Version: 1.0",
+    "Content-type: text/plain; charset=us-ascii",
+    "Subject: Some subject here",
+    "",
+    "Some email body here",
+    ""
+].join("\n");
 
-}
+var outnext = function(code, msg) {
+    switch (code) {
+        case DENY:
+            plugin.logerror("Sending mail failed: " + msg);
+            break;
+        case OK:
+            plugin.loginfo("mail sent");
+            next();
+            break;
+        default:
+            plugin.logerror("Unrecognized return code from sending email: " + msg);
+            next();
+    }
+};
 
-// exports.send_email = function(next, connection) {
-// var mail_from = connection.transaction.mail_from;
-// var rcpt_to = connection.transaction.rcpt_to;
-// var body = connection.transaction.message_stream.get_data();
-
-// var transporter = nodemailer.createTransport({
-//     host: '158.101.137.14',
-//     port: 25,
-// secure: true,
-// auth: {
-//     user: 'cuong@demo.akadigital.com',
-//     pass: 'password2'
-// }
-// });
-
-// var mailOptions = {
-//     from: 'mail_from@demo.akadigital',
-//     to: 'cuong.truong@akadigital.vn',
-//     subject: 'Test email from Haraka',
-//     text: 'body'
-// };
-
-// transporter.sendMail(mailOptions, function(error, info) {
-//     if (error) {
-//         console.log(error);
-//     } else {
-//         console.log('Email sent: ' + info.response);
-//     }
-// });
-
-// next();
-// }
+outbound.send_email(from, to, contents, outnext);

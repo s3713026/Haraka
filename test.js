@@ -1,34 +1,31 @@
-var outbound = require('./outbound');
+const nodemailer = require('nodemailer');
 
-var plugin = this;
-
-var to = 'phuucong200297@gmail.com';
-var from = 'mkt@demo.akadigital.net';
-
-var contents = [
-    "From: " + from,
-    "To: " + to,
-    "MIME-Version: 1.0",
-    "Content-type: text/plain; charset=us-ascii",
-    "Subject: Some subject here",
-    "",
-    "Some email body here",
-    ""
-].join("\n");
-
-var outnext = function(code, msg) {
-    switch (code) {
-        case DENY:
-            plugin.logerror("Sending mail failed: " + msg);
-            break;
-        case OK:
-            plugin.loginfo("mail sent");
-            next();
-            break;
-        default:
-            plugin.logerror("Unrecognized return code from sending email: " + msg);
-            next();
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+    host: 'localhost',
+    port: 25,
+    secure: true, // true for 465, false for other ports
+    auth: {
+        user: 'username1',
+        pass: 'akatestpassword'
     }
+});
+
+// setup email data with unicode symbols
+let mailOptions = {
+    from: 'test@demo.akadigital.net',
+    to: 'phucuong200297@gmail.com',
+    subject: 'Test email from Haraka',
+    text: 'body',
+    html: '<b>Hello world?</b>'
 };
 
-outbound.send_email(from, to, contents, outnext);
+// send mail with defined transport object
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        console.log("ERROR ROI NE")
+        console.log(error);
+    } else {
+        console.log('Message sent: %s', info.messageId);
+    }
+});
