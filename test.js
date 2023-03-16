@@ -10,7 +10,7 @@ let transporter = nodemailer.createTransport({
         pass: 'akatestpassword'
     },
     tls: {
-        ciphers: 'SSLv3',
+        ca: fs.readFileSync('/plugins/tls.ini'),
         rejectUnauthorized: false
     }
 });
