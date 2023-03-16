@@ -6,7 +6,7 @@ exports.register = function() {
     var transporter = nodemailer.createTransport({
         host: 'localhost',
         port: 25,
-        // secure: true, // true for 465, false for other ports
+        secure: true, // true for 465, false for other ports
         auth: {
             user: 'username1',
             pass: 'akatestpassword'
@@ -27,9 +27,9 @@ exports.register = function() {
 
     transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
-            this.loginfo(error);
+            console.log(error);
         } else {
-            this.loginfo('Email sent: ' + info.response);
+            console.log('Email sent: ' + info.response);
         }
     });
 
