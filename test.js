@@ -6,13 +6,13 @@ let transporter = nodemailer.createTransport({
     port: 25,
     secure: false, // true for 465, false for other ports
     tls: {
-        rejectUnauthorized: true
+        rejectUnauthorized: false
     }
 });
 
 // setup email data with unicode symbols
 let mailOptions = {
-    from: 'mail_from@demo.akadigital.net',
+    from: 'test@demo.akadigital.net',
     to: 'phucuong200297@gmail.com',
     subject: 'Test email from Haraka',
     text: 'body',
