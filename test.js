@@ -10,8 +10,8 @@ let transporter = nodemailer.createTransport({
         pass: 'akatestpassword'
     },
     tls: {
-        rejectUnauthorized: false,
-        // secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
+        ciphers: 'SSLv3',
+        rejectUnauthorized: false
     }
 });
 
