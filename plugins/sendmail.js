@@ -3,7 +3,7 @@ var outbound = require('./outbound');
 var plugin = this;
 
 var to = 'phucuong200297@gmail.com';
-var from = 'haraka@demo.akadigital.net';
+var from = 'cuong@demo.akadigital.net';
 
 var contents = [
     "From: " + from,
