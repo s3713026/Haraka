@@ -4,7 +4,7 @@ const tls = require('tls');
 let transporter = nodemailer.createTransport({
     host: 'localhost',
     port: 25,
-    secure: true, // true for 465, false for other ports
+    secure: false, // true for 465, false for other ports
     tls: {
         rejectUnauthorized: true
             // secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
