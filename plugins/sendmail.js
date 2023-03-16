@@ -6,7 +6,7 @@ exports.register = function() {
     var transporter = nodemailer.createTransport({
         host: 'localhost',
         port: 25,
-        secure: true, // true for 465, false for other ports
+        secure: false, // true for 465, false for other ports
         auth: {
             user: 'username1',
             pass: 'akatestpassword'
