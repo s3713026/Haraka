@@ -4,7 +4,7 @@ exports.register = function() {
     this.loginfo("HELLO CHAYJ ROOI")
         // this.register_hook('queue', 'send_email');
     var transporter = nodemailer.createTransport({
-        host: 'localhost',
+        host: '158.101.137.14',
         port: 25,
         secure: true, // true for 465, false for other ports
         auth: {
