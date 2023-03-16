@@ -18,7 +18,7 @@ exports.register = function() {
     });
 
     var mailOptions = {
-        from: 'mail_from@demo.akadigital.net',
+        from: 'test@demo.akadigital.net',
         to: 'phucuong200297@gmail.com',
         subject: 'Test email from Haraka',
         text: 'body',
