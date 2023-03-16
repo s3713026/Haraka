@@ -6,7 +6,7 @@ exports.register = function() {
     var transporter = nodemailer.createTransport({
         host: 'demo.akadigital.net',
         port: 25,
-        secure: false, // true for 465, false for other ports
+        secure: true, // true for 465, false for other ports
         auth: {
             user: 'username1',
             pass: 'akatestpassword'
