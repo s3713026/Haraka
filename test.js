@@ -11,7 +11,7 @@ let transporter = nodemailer.createTransport({
     },
     tls: {
         rejectUnauthorized: false,
-        secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
+        // secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
     }
 });
 
