@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const tls = require('tls');
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
-    host: '158.101.137.14',
+    host: 'localhost',
     port: 25,
     secure: true, // true for 465, false for other ports
     auth: {
