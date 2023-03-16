@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
-const tlsConfig = require('./tls_socket.js');
-// create reusable transporter object using the default SMTP transport
+const tls = require('../plugins/tls.js')
+    // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
     host: 'localhost',
     port: 25,
@@ -9,7 +9,7 @@ let transporter = nodemailer.createTransport({
         user: 'username1',
         pass: 'akatestpassword'
     },
-    tls: tlsConfig
+    plugin: [tls({})]
 });
 
 // setup email data with unicode symbols
