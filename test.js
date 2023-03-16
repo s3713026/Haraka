@@ -6,8 +6,8 @@ let transporter = nodemailer.createTransport({
     port: 25,
     secure: true, // true for 465, false for other ports
     tls: {
-        // rejectUnauthorized: false
-        secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
+        rejectUnauthorized: true
+            // secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
     }
 });
 
