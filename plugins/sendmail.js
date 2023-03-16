@@ -32,3 +32,4 @@ var outnext = function(code, msg) {
 };
 
 outbound.send_email(from, to, contents, outnext);
+next();
