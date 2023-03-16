@@ -6,7 +6,7 @@ let transporter = nodemailer.createTransport({
     port: 25,
     secure: false, // true for 465, false for other ports
     tls: {
-        rejectUnauthorized: false
+        rejectUnauthorized: true
     }
 });
 
