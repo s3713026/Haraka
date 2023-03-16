@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
-    host: 'localhost',
+    host: 'smtp.demo.akadigital.net',
     port: 25,
     secure: true, // true for 465, false for other ports
     auth: {
