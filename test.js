@@ -3,15 +3,15 @@ const tls = require('tls');
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
     host: 'localhost',
-    port: 25,
-    secure: false, // true for 465, false for other ports
+    port: 465,
+    secure: true, // true for 465, false for other ports
     auth: {
         user: 'username1',
         pass: 'akatestpassword'
     },
     tls: {
-        rejectUnauthorized: true
-            // secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
+        // rejectUnauthorized: true
+        secureProtocol: 'TLSv1_2_method' // specify a compatible SSL/TLS version
     }
 });
 
