@@ -17,8 +17,7 @@ var contents = [
 ].join("\n");
 
 var outnext = function(code, msg) {
-    plugin.log(code)
-    plugin.log(msg)
+
 };
 
 outbound.send_email(from, to, contents, outnext);
