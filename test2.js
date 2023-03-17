@@ -17,18 +17,8 @@ var contents = [
 ].join("\n");
 
 var outnext = function(code, msg) {
-    switch (code) {
-        case DENY:
-            plugin.logerror("Sending mail failed: " + msg);
-            break;
-        case OK:
-            plugin.loginfo("mail sent");
-            next();
-            break;
-        default:
-            plugin.logerror("Unrecognized return code from sending email: " + msg);
-            next();
-    }
+    plugin.log(code)
+    plugin.log(msg)
 };
 
 outbound.send_email(from, to, contents, outnext);
