@@ -17,6 +17,8 @@ var contents = [
 ].join("\n");
 
 var outnext = function(code, msg) {
+    plugin.logerror(code);
+    plugin.logerror("Sending mail failed: " + msg);
 
 };
 
