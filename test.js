@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-    host: 'demo.akadigital.net',
+    host: 'localhost',
     port: 25,
     secure: false,
     auth: {
