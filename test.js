@@ -4,7 +4,7 @@ exports.plugins = {
     myplugin: { tls }
 }
 const transporter = nodemailer.createTransport({
-    host: 'demo.akadigital.net',
+    host: '158.101.137.14',
     port: 25,
     secure: false,
     auth: {
