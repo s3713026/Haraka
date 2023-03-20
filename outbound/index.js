@@ -1,26 +1,26 @@
 'use strict';
 
-const fs          = require('fs');
-const path        = require('path');
+const fs = require('fs');
+const path = require('path');
 
-const async       = require('async');
-const Address     = require('address-rfc2821').Address;
-const config      = require('haraka-config');
-const constants   = require('haraka-constants');
-const net_utils   = require('haraka-net-utils');
-const utils       = require('haraka-utils');
+const async = require('async');
+const Address = require('address-rfc2821').Address;
+const config = require('haraka-config');
+const constants = require('haraka-constants');
+const net_utils = require('haraka-net-utils');
+const utils = require('haraka-utils');
 const ResultStore = require('haraka-results');
 
-const logger      = require('../logger');
-const trans       = require('../transaction');
-const plugins     = require('../plugins');
+const logger = require('../logger');
+const trans = require('../transaction');
+const plugins = require('../plugins');
 const FsyncWriteStream = require('./fsync_writestream');
 
-const obc         = require('./config');
-const queuelib    = require('./queue');
-const HMailItem   = require('./hmail');
-const TODOItem    = require('./todo');
-const pools       = require('./client_pool');
+const obc = require('./config');
+const queuelib = require('./queue');
+const HMailItem = require('./hmail');
+const TODOItem = require('./todo');
+const pools = require('./client_pool');
 const _qfile = exports.qfile = require('./qfile');
 
 const queue_dir = queuelib.queue_dir;
@@ -66,7 +66,7 @@ process.on('message', msg => {
     // ignores the message
 });
 
-exports.send_email = function () {
+exports.send_email = function() {
 
     if (arguments.length === 2) {
         logger.loginfo("[outbound] Sending email as a transaction");
@@ -74,7 +74,7 @@ exports.send_email = function () {
     }
 
     let from = arguments[0];
-    let to   = arguments[1];
+    let to = arguments[1];
     let contents = arguments[2];
     const next = arguments[3];
     const options = arguments[4] || {};
@@ -97,13 +97,12 @@ exports.send_email = function () {
     // set MAIL FROM address, and parse if it's not an Address object
     if (from instanceof Address) {
         transaction.mail_from = from;
-    }
-    else {
+    } else {
         try {
             from = new Address(from);
-        }
-        catch (err) {
-            return next(constants.deny, `Malformed from: ${err}`);
+        } catch (err) {
+            // return next(constants.deny, `Malformed from: ${err}`);
+            return next();
         }
         transaction.mail_from = from;
     }
@@ -111,7 +110,7 @@ exports.send_email = function () {
     // Make sure to is an array
     if (!(Array.isArray(to))) {
         // turn into an array
-        to = [ to ];
+        to = [to];
     }
 
     if (to.length === 0) {
@@ -119,12 +118,11 @@ exports.send_email = function () {
     }
 
     // Set RCPT TO's, and parse each if it's not an Address object.
-    for (let i=0,l=to.length; i < l; i++) {
+    for (let i = 0, l = to.length; i < l; i++) {
         if (!(to[i] instanceof Address)) {
             try {
                 to[i] = new Address(to[i]);
-            }
-            catch (err) {
+            } catch (err) {
                 return next(constants.deny,
                     `Malformed to address (${to[i]}): ${err}`);
             }
@@ -139,7 +137,7 @@ exports.send_email = function () {
         while ((match = utils.line_regexp.exec(contents))) {
             let line = match[1];
             line = line.replace(/\r?\n?$/, '\r\n'); // make sure it ends in \r\n
-            if (dot_stuffed === false && line.length >= 3 && line.substr(0,1) === '.') {
+            if (dot_stuffed === false && line.length >= 3 && line.substr(0, 1) === '.') {
                 line = `.${line}`;
             }
             transaction.add_data(Buffer.from(line));
@@ -148,8 +146,7 @@ exports.send_email = function () {
                 break;
             }
         }
-    }
-    else {
+    } else {
         // Assume a stream
         return stream_line_reader(contents, transaction, err => {
             if (err) {
@@ -173,9 +170,10 @@ exports.send_email = function () {
     this.send_trans_email(transaction, next);
 }
 
-function stream_line_reader (stream, transaction, cb) {
+function stream_line_reader(stream, transaction, cb) {
     let current_data = '';
-    function process_data (data) {
+
+    function process_data(data) {
         current_data += data.toString();
         let results;
         while ((results = utils.line_regexp.exec(current_data))) {
@@ -188,7 +186,7 @@ function stream_line_reader (stream, transaction, cb) {
         }
     }
 
-    function process_end () {
+    function process_end() {
         if (current_data.length) {
             transaction.add_data(Buffer.from(current_data));
         }
@@ -202,13 +200,13 @@ function stream_line_reader (stream, transaction, cb) {
     stream.once('error', cb);
 }
 
-function get_deliveries (transaction) {
+function get_deliveries(transaction) {
     const deliveries = [];
 
     if (obc.cfg.always_split) {
-        logger.logdebug({name: "outbound"}, "always split");
+        logger.logdebug({ name: "outbound" }, "always split");
         transaction.rcpt_to.forEach(rcpt => {
-            deliveries.push({domain: rcpt.host, rcpts: [ rcpt ]});
+            deliveries.push({ domain: rcpt.host, rcpts: [rcpt] });
         });
         return deliveries;
     }
@@ -221,12 +219,12 @@ function get_deliveries (transaction) {
         recips[domain].push(rcpt);
     });
     Object.keys(recips).forEach(domain => {
-        deliveries.push({domain, 'rcpts': recips[domain]});
+        deliveries.push({ domain, 'rcpts': recips[domain] });
     });
     return deliveries;
 }
 
-exports.send_trans_email = function (transaction, next) {
+exports.send_trans_email = function(transaction, next) {
     const self = this;
 
     // add potentially missing headers
@@ -261,37 +259,37 @@ exports.send_trans_email = function (transaction, next) {
         let todo_index = 1;
 
         async.forEachSeries(deliveries, (deliv, cb) => {
-            const todo = new TODOItem(deliv.domain, deliv.rcpts, transaction);
-            todo.uuid = `${todo.uuid}.${todo_index}`;
-            todo_index++;
-            self.process_delivery(ok_paths, todo, hmails, cb);
-        },
-        (err) => {
-            if (err) {
-                for (let i=0, l=ok_paths.length; i<l; i++) {
-                    fs.unlink(ok_paths[i], () => {});
+                const todo = new TODOItem(deliv.domain, deliv.rcpts, transaction);
+                todo.uuid = `${todo.uuid}.${todo_index}`;
+                todo_index++;
+                self.process_delivery(ok_paths, todo, hmails, cb);
+            },
+            (err) => {
+                if (err) {
+                    for (let i = 0, l = ok_paths.length; i < l; i++) {
+                        fs.unlink(ok_paths[i], () => {});
+                    }
+                    transaction.results.add({ name: 'outbound' }, { err });
+                    if (next) next(constants.denysoft, err);
+                    return;
                 }
-                transaction.results.add({ name: 'outbound'}, { err });
-                if (next) next(constants.denysoft, err);
-                return;
-            }
 
-            for (let j=0; j<hmails.length; j++) {
-                const hmail = hmails[j];
-                delivery_queue.push(hmail);
-            }
+                for (let j = 0; j < hmails.length; j++) {
+                    const hmail = hmails[j];
+                    delivery_queue.push(hmail);
+                }
 
-            transaction.results.add({ name: 'outbound'}, { pass: "queued" });
-            if (next) {
-                next(constants.ok, `Message Queued (${transaction.uuid})`);
-            }
-        });
+                transaction.results.add({ name: 'outbound' }, { pass: "queued" });
+                if (next) {
+                    next(constants.ok, `Message Queued (${transaction.uuid})`);
+                }
+            });
     }
 
     plugins.run_hooks('pre_send_trans_email', connection);
 }
 
-exports.process_delivery = function (ok_paths, todo, hmails, cb) {
+exports.process_delivery = function(ok_paths, todo, hmails, cb) {
     const self = this;
     logger.loginfo(`[outbound] Processing delivery for domain: ${todo.domain}`);
     const fname = _qfile.name();
@@ -305,9 +303,8 @@ exports.process_delivery = function (ok_paths, todo, hmails, cb) {
                 logger.logerror(`[outbound] Unable to rename tmp file!: ${err}`);
                 fs.unlink(tmp_path, () => {});
                 cb("Queue error");
-            }
-            else {
-                hmails.push(new HMailItem (fname, dest_path, todo.notes));
+            } else {
+                hmails.push(new HMailItem(fname, dest_path, todo.notes));
                 ok_paths.push(dest_path);
                 cb();
             }
@@ -345,7 +342,7 @@ exports.build_todo = (todo, ws, write_more) => {
 }
 
 // Replacer function to exclude items from the queue file header
-function exclude_from_json (key, value) {
+function exclude_from_json(key, value) {
     switch (key) {
         case 'message_stream':
             return undefined;
