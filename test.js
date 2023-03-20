@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const plugin = require('./plugins')
+const plugins = require('./plugins')
 
 // app.get('/', (req, res) => {
 //     res.send('SEND MAIL ĐI');
