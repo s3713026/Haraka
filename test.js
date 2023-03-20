@@ -5,7 +5,7 @@ const plugin = require('./plugins')
 app.get('/', (req, res) => {
     res.send('SEND MAIL ĐI');
     console.log("Hello ")
-    plugin;
+    plugin.registered_hooks();
 });
 
 
