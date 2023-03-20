@@ -13,7 +13,7 @@ const email = {
 };
 
 // Send the email using outbound.sendmail
-outbound.send_email('sendmail', email, function(err, res) {
+outbound.send_email(from, to, email, function(err, res) {
     if (err) {
         console.error(err);
     } else {

@@ -101,8 +101,7 @@ exports.send_email = function() {
         try {
             from = new Address(from);
         } catch (err) {
-            // return next(constants.deny, `Malformed from: ${err}`);
-            return next();
+            return next(constants.deny, `Malformed from: ${err}`);
         }
         transaction.mail_from = from;
     }
