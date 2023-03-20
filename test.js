@@ -13,5 +13,5 @@ const plugins = require('./plugins')
 //     console.log('Server started on port 5000');
 // });
 
-const myClass = new Plugin();
+const myClass = Plugin();
 myClass();
