@@ -4,7 +4,6 @@ const plugin = require('./plugins')
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
-    plugin.register();
 });
 
 
