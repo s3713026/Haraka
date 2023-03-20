@@ -1,3 +1,5 @@
+var outbound = require('./outbound');
+
 exports.hook_queue_outbound = function(next, connection) {
     const tx = connection.transaction;
 
