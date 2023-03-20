@@ -1,4 +1,4 @@
-const smtp_client = require('haraka-plugin-smtp-client');
+const smtp_client = require('smtp-client');
 
 exports.hook_queue_outbound = function(next, connection) {
     // Use the smtp_client plugin to send the email
