@@ -30,8 +30,8 @@ exports.sendmail = function(next, connection, params) {
         port: 25,
         secure: false,
         auth: {
-            user: 'username',
-            pass: 'password'
+            user: 'username1',
+            pass: 'akatestpassword'
         }
     };
 
