@@ -1,5 +1,3 @@
-const smtp_client = require('smtp_client');
-
 exports.sendmail = function(next, connection, params) {
     const plugin = this;
 
@@ -13,33 +11,32 @@ exports.sendmail = function(next, connection, params) {
 
     // Set up the SMTP client options
     const smtp_options = {
-        host: 'demo.akadigital.net',
+        host: 'localhost',
         port: 25,
         secure: false,
         auth: {
-            user: 'username1',
-            pass: 'akademopassword'
+            user: 'username',
+            pass: 'password'
         }
     };
 
-    // Send the email using the SMTP client
-    smtp_client.connect(smtp_options, function(err, client) {
-        if (err) {
-            plugin.logerror(`Error connecting to SMTP server: ${err}`);
-            return next();
-        }
-        client.useEnvelope({
-            from: message.from,
-            to: message.to
-        });
-        client.addData(`Subject: ${message.subject}\r\n\r\n${message.body}`);
-        client.end(function(err) {
-            if (err) {
-                plugin.logerror(`Error sending email: ${err}`);
-                return next();
-            }
-            plugin.loginfo('Email sent successfully');
-            return next(OK);
-        });
-    });
+    // Send the email using the outbound module
+    const envelope = {
+        from: message.from,
+        to: [message.to]
+    };
+    const email_data = `From: ${message.from}\r\nTo: ${message.to}\r\nSubject: ${message.subject}\r\n\r\n${message.body}`;
+    connection.transaction.message_stream.pipe(process.stdout);
+    connection.transaction.message_stream.end(email_data);
+    connection.transaction.notes.outbound = {
+        host: smtp_options.host,
+        port: smtp_options.port,
+        tls: { enabled: smtp_options.secure },
+        auth: { user: smtp_options.auth.user, pass: smtp_options.auth.pass },
+        mail_from: message.from,
+        rcpt_to: [message.to],
+        data: email_data
+    };
+    connection.transaction.results.add(plugin, { pass: 'Email sent successfully' });
+    return next(OK);
 };
