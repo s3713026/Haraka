@@ -1,22 +1,45 @@
-var outbound = require('./outbound');
+const smtp_client = require('smtp_client');
 
-exports.hook_queue_outbound = function(next, connection) {
-    const tx = connection.transaction;
-
-    // Set up the email headers
-    tx.message.header.add('From', 'sender@demo.akadigital.net');
-    tx.message.header.add('To', 'phucuong200297@gmail.com');
-    tx.message.header.add('Subject', 'Hello world');
-
-    // Send the email using the outbound plugin
+exports.sendmail = function(next, connection, params) {
     const plugin = this;
-    plugin.logdebug('Sending outbound email');
-    plugin.outbound.send_email(tx, function(err, out_message) {
+
+    // Set up the email headers and content
+    const message = {
+        from: 'sender@demo.akadigital.net',
+        to: 'phucuong200297@gmail.com',
+        subject: 'Test email',
+        body: 'This is a test email'
+    };
+
+    // Set up the SMTP client options
+    const smtp_options = {
+        host: 'demo.akadigital.net',
+        port: 25,
+        secure: false,
+        auth: {
+            user: 'username1',
+            pass: 'akademopassword'
+        }
+    };
+
+    // Send the email using the SMTP client
+    smtp_client.connect(smtp_options, function(err, client) {
         if (err) {
-            plugin.logerror(`Error sending email: ${err}`);
+            plugin.logerror(`Error connecting to SMTP server: ${err}`);
             return next();
         }
-        plugin.loginfo('Email sent successfully');
-        return next(OK);
+        client.useEnvelope({
+            from: message.from,
+            to: message.to
+        });
+        client.addData(`Subject: ${message.subject}\r\n\r\n${message.body}`);
+        client.end(function(err) {
+            if (err) {
+                plugin.logerror(`Error sending email: ${err}`);
+                return next();
+            }
+            plugin.loginfo('Email sent successfully');
+            return next(OK);
+        });
     });
 };
