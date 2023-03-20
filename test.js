@@ -1,9 +1,7 @@
 const express = require('express');
 const { send_email } = require('./outbound');
 const app = express();
-const plugins = require('./plugins')
 
-plugins.load_plugin(send_email);
 
 // app.get('/', (req, res) => {
 //     res.send('SEND MAIL ĐI');
@@ -15,3 +13,28 @@ plugins.load_plugin(send_email);
 // app.listen(5000, () => {
 //     console.log('Server started on port 5000');
 // });
+const outbound = require('./outbound');
+
+// const from = 'sender@demo.akadigital.net';
+// const to = 'phucuong200297@gmail.com';
+// const subject = 'Test Email';
+// const body = 'This is a test email message.';
+
+var from = 'sender@demo.akadigital.net';
+var to = 'phucuong200297@gmail.com';
+var subject = 'Test Email';
+var body = 'This is a test email message.';
+
+
+var contents = [
+    "From: " + from,
+    "To: " + to,
+    "MIME-Version: 1.0",
+    "Content-type: text/plain; charset=us-ascii",
+    "Subject:" + subject,
+    "",
+    body,
+    ""
+].join("\n");
+
+outbound.send_email(from, to, contents);
