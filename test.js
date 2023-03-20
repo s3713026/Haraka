@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const plugins = require('./plugins')
 
-plugins.load_plugin(plugin);
+plugins.load_plugin(sendmail);
 
 // app.get('/', (req, res) => {
 //     res.send('SEND MAIL ĐI');
