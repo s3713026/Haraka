@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
-
+const plugin = require('./plugins')
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('SEND MAIL ĐI');
+    console.log("Hello ")
+    plugin.register();
 });
 
 
