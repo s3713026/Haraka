@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const haraka = require('haraka');
+// const haraka = require('haraka');
 
 // Define the API endpoint
 app.post('/api/send-email', (req, res) => {
@@ -12,10 +12,10 @@ app.post('/api/send-email', (req, res) => {
     }
 
     // Call the Haraka plugin function
-    const plugin = haraka.plugin('sendmail');
+    // const plugin = haraka.plugin('sendmail');
     // plugin.sendEmail(from, to, subject, body);
-
-    // Send a success response
+    console.log("RUN API")
+        // Send a success response
     res.status(200).send('Email sent successfully');
 });
 
