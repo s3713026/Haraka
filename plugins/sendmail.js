@@ -1,4 +1,4 @@
-const outbound = require('outbound').outbound;
+const outbound = require('./outbound');
 
 const from = 'sender@demo.akadigital.net';
 const to = 'phucuong200297@gmail.com';
