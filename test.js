@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-    host: 'loaclhost',
+    host: 'localhost',
     port: 25,
     secure: false,
     auth: {
@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 const message = {
     from: 'me@demo.akadigital.net',
-    to: 'phucuong@200297@gmail.com',
+    to: 'phucuong200297@gmail.com',
     subject: 'Hello',
     text: 'Hello, world!',
 };
