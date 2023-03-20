@@ -1,15 +1,20 @@
 const outbound = require('./outbound');
+const api = require('..test/');
 
-const from = 'sender@demo.akadigital.net';
-const to = 'phucuong200297@gmail.com';
-const subject = 'Test Email';
-const body = 'This is a test email message.';
+// const from = 'sender@demo.akadigital.net';
+// const to = 'phucuong200297@gmail.com';
+// const subject = 'Test Email';
+// const body = 'This is a test email message.';
 
-const email = {
-    from: from,
-    to: to,
-    subject: subject,
-    body: body
+var from = 'sender@demo.akadigital.net';
+var to = 'phucuong200297@gmail.com';
+var subject = 'Test Email';
+var body = 'This is a test email message.';
+
+exports.hook_data = function(next, connection) {
+    api.myFunction(); // Call the exported function from the API file
+    // Do other stuff here
+    next();
 };
 
 var contents = [
@@ -17,9 +22,9 @@ var contents = [
     "To: " + to,
     "MIME-Version: 1.0",
     "Content-type: text/plain; charset=us-ascii",
-    "Subject: That is subject",
+    "Subject:" + subject,
     "",
-    "Hello Cuong",
+    body,
     ""
 ].join("\n");
 

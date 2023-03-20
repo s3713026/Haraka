@@ -1,26 +1,26 @@
-const nodemailer = require('nodemailer');
+const express = require('express');
+const app = express();
+const haraka = require('haraka');
 
-const transporter = nodemailer.createTransport({
-    host: 'localhost',
-    port: 25,
-    secure: false,
-    auth: {
-        user: 'username1',
-        pass: 'akatestpassword',
-    },
+// Define the API endpoint
+app.post('/api/send-email', (req, res) => {
+    // Validate the input data
+    const { from, to, subject, body } = req.body;
+    if (!from || !to || !subject || !body) {
+        res.status(400).send('Missing required fields');
+        return;
+    }
+
+    // Call the Haraka plugin function
+    const plugin = haraka.plugin('sendmail');
+    // plugin.sendEmail(from, to, subject, body);
+
+    // Send a success response
+    res.status(200).send('Email sent successfully');
 });
 
-const message = {
-    from: 'me@demo.akadigital.net',
-    to: 'phucuong200297@gmail.com',
-    subject: 'Hello',
-    text: 'Hello, world!',
-};
-
-transporter.sendMail(message, (error, info) => {
-    if (error) {
-        console.error(error);
-    } else {
-        console.log(`Message sent: ${info.messageId}`);
-    }
+// Start the server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
 });
