@@ -1,5 +1,4 @@
 const outbound = require('./outbound');
-const api = require('..test/');
 
 // const from = 'sender@demo.akadigital.net';
 // const to = 'phucuong200297@gmail.com';
@@ -11,11 +10,6 @@ var to = 'phucuong200297@gmail.com';
 var subject = 'Test Email';
 var body = 'This is a test email message.';
 
-exports.hook_data = function(next, connection) {
-    api.myFunction(); // Call the exported function from the API file
-    // Do other stuff here
-    next();
-};
 
 var contents = [
     "From: " + from,
