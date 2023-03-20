@@ -1,5 +1,4 @@
 const express = require('express');
-const { send_email } = require('./outbound');
 const app = express();
 
 
