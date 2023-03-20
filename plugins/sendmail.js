@@ -17,9 +17,9 @@ var contents = [
     "To: " + to,
     "MIME-Version: 1.0",
     "Content-type: text/plain; charset=us-ascii",
-    "Subject: Some subject here",
+    "Subject: That is subject",
     "",
-    "Some email body here",
+    "Hello Cuong",
     ""
 ].join("\n");
 
