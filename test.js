@@ -13,4 +13,5 @@ const plugins = require('./plugins')
 //     console.log('Server started on port 5000');
 // });
 
-plugins.run_hooks('connect_init');
+const myClass = new Plugin();
+myClass();
