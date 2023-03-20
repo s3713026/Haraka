@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const plugins = require('./plugins')
 
+plugins.load_plugin(plugin);
+
 // app.get('/', (req, res) => {
 //     res.send('SEND MAIL ĐI');
 //     console.log("Hello ")
@@ -12,6 +14,3 @@ const plugins = require('./plugins')
 // app.listen(5000, () => {
 //     console.log('Server started on port 5000');
 // });
-
-const myClass = Plugin();
-myClass();
