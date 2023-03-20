@@ -12,11 +12,23 @@ const email = {
     body: body
 };
 
+var contents = [
+    "From: " + from,
+    "To: " + to,
+    "MIME-Version: 1.0",
+    "Content-type: text/plain; charset=us-ascii",
+    "Subject: Some subject here",
+    "",
+    "Some email body here",
+    ""
+].join("\n");
+
+outbound.send_email(from, to, contents);
 // Send the email using outbound.sendmail
-outbound.send_email(from, to, email, function(err, res) {
-    if (err) {
-        console.error(err);
-    } else {
-        console.log('Email sent successfully:', res);
-    }
-});
+// outbound.send_email(from, to, email, function(err, res) {
+//     if (err) {
+//         console.error(err);
+//     } else {
+//         console.log('Email sent successfully:', res);
+//     }
+// });
