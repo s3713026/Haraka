@@ -1,3 +1,18 @@
+exports.register = function() {
+    const plugin = this;
+    plugin.load_sender_ini();
+    plugin.register_hook('queue', 'sendmail');
+};
+
+exports.load_sender_ini = function() {
+    const plugin = this;
+    plugin.cfg = plugin.config.get('sender.ini', {
+        booleans: ['enabled']
+    }, function() {
+        plugin.load_sender_ini();
+    });
+};
+
 exports.sendmail = function(next, connection, params) {
     const plugin = this;
 
