@@ -26,7 +26,7 @@ exports.sendmail = function(next, connection, params) {
 
     // Set up the SMTP client options
     const smtp_options = {
-        host: 'localhost',
+        host: 'demo.akadigital.net',
         port: 25,
         secure: false,
         auth: {
