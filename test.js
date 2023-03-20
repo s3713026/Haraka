@@ -1,5 +1,8 @@
 const nodemailer = require('nodemailer');
-
+const tls = require('node:tls')
+exports.plugins = {
+    myplugin: { tls }
+}
 const transporter = nodemailer.createTransport({
     host: 'localhost',
     port: 25,
