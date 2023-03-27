@@ -10,7 +10,7 @@ app.post('/send-email', (req, res) => {
     const to = req.body.to;
     const subject = req.body.subject;
     const body = req.body.body;
-
+    rm
     const message = [
         "From: " + from,
         "To: " + to,
