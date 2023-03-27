@@ -38,10 +38,11 @@ var contents = [
 
 // outbound.send_email(from, to, contents);
 // Call the send_email method
-outbound.send_email(from, to, contents, function(err, result) {
-    if (err) {
-        console.error('Error sending email:', err);
-    } else {
-        console.log('Email sent successfully:', result);
-    }
-});
+// outbound.send_email(from, to, contents, function(err, result) {
+//     if (err) {
+//         console.error('Error sending email:', err);
+//     } else {
+//         console.log('Email sent successfully:', result);
+//     }
+// });
+outbound.send_email();
