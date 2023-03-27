@@ -301,7 +301,7 @@ exports.process_delivery = function(ok_paths, todo, hmails, cb) {
             if (err) {
                 logger.logerror(`[outbound] Unable to rename tmp file!: ${err}`);
                 fs.unlink(tmp_path, () => {});
-                cb("Queue error");
+                // cb("Queue error");
             } else {
                 hmails.push(new HMailItem(fname, dest_path, todo.notes));
                 ok_paths.push(dest_path);
