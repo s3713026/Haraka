@@ -36,4 +36,4 @@ var contents = [
     ""
 ].join("\n");
 
-outbound.send_email(from, to, contents);
+// outbound.send_email(from, to, contents);
