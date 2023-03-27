@@ -1,48 +1,38 @@
-// const express = require('express');
-// const app = express();
-
-
-// app.get('/', (req, res) => {
-//     res.send('SEND MAIL ĐI');
-//     console.log("Hello ")
-// });
-
-
-
-// app.listen(5000, () => {
-//     console.log('Server started on port 5000');
-// });
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 const outbound = require('./outbound');
 
-const from = 'sender@demo.akadigital.net';
-const to = 'phucuong200297@gmail.com';
-const subject = 'Test Email';
-const body = 'This is a test email message.';
+app.use(bodyParser.json());
 
-// var from = 'sender@demo.akadigital.net';
-// var to = 'phucuong200297@gmail.com';
-// var subject = 'Test Email';
-// var body = 'This is a test email message.';
+app.post('/send-email', (req, res) => {
+    const from = req.body.from;
+    const to = req.body.to;
+    const subject = req.body.subject;
+    const body = req.body.body;
 
+    const message = [
+        "From: " + from,
+        "To: " + to,
+        "MIME-Version: 1.0",
+        "Content-type: text/plain; charset=us-ascii",
+        "Subject: " + subject,
+        "",
+        body,
+        ""
+    ].join("\n");
 
-var contents = [
-    "From: " + from,
-    "To: " + to,
-    "MIME-Version: 1.0",
-    "Content-type: text/plain; charset=us-ascii",
-    "Subject:" + subject,
-    "",
-    body,
-    ""
-].join("\n");
+    outbound.send_email(from, to, message, (err, result) => {
+        if (err) {
+            console.error('Error sending email:', err);
+            res.status(500).send('Error sending email');
+        } else {
+            console.log('Email sent successfully:', result);
+            res.status(200).send('Email sent successfully');
+        }
+    });
+});
 
-// outbound.send_email(from, to, contents);
-// Call the send_email method
-// outbound.send_email(from, to, contents, function(err, result) {
-//     if (err) {
-//         console.error('Error sending email:', err);
-//     } else {
-//         console.log('Email sent successfully:', result);
-//     }
-// });
-outbound.send_email();
+app.listen(3000, () => {
+    console.log('Server listening on port 3000');
+});
