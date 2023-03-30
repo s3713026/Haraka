@@ -1,6 +1,6 @@
 var http = require('http'),
-    sys = require('sys'),
     querystring = require('querystring');
+
 
 // Set listening port
 var port = "8079";
@@ -13,8 +13,6 @@ var from = "noreply@demo.akadigital.net";
 
 // Create the listening server
 http.createServer(function(request, response) {
-    sys.puts('Request for ' + request.url);
-
     switch (request.url) {
         case '/':
             response.writeHead(200, {
@@ -64,10 +62,10 @@ http.createServer(function(request, response) {
 
                     var outnext = function(code, msg) {
                         switch (code) {
-                            case DENY:
+                            case 'DENY':
                                 var output = "Sending mail failed: " + msg;
                                 break;
-                            case OK:
+                            case 'OK':
                                 var output = "mail sent";
                                 break;
                             default:
@@ -81,7 +79,7 @@ http.createServer(function(request, response) {
 
                     if (post.key === api_key)
                         outbound.send_email(from, post.to, contents, outnext);
-                    else response.write(sys.inspect("API Key was invalid."));
+                    else response.write("API Key was invalid.");
 
                 });
 
