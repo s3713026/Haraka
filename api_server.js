@@ -6,10 +6,10 @@ var http = require('http'),
 var port = "8079";
 
 // Set API Key
-var api_key = "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX";
+var api_key = "00000-00000-00000-00000-00000";
 
 // Set Default From Email Address
-var from = "noreply@yenn.co";
+var from = "noreply@demo.akadigital.net";
 
 // Create the listening server
 http.createServer(function(request, response) {
