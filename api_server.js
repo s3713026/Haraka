@@ -1,6 +1,8 @@
 var http = require('http'),
     sys = require('sys'),
+    util = require('util'),
     querystring = require('querystring');
+
 
 // Set listening port
 var port = "8079";
@@ -13,7 +15,7 @@ var from = "noreply@demo.akadigital.net";
 
 // Create the listening server
 http.createServer(function(request, response) {
-    sys.puts('Request for ' + request.url);
+    util.puts('Request for ' + request.url);
 
     switch (request.url) {
         case '/':
@@ -81,7 +83,7 @@ http.createServer(function(request, response) {
 
                     if (post.key === api_key)
                         outbound.send_email(from, post.to, contents, outnext);
-                    else response.write(sys.inspect("API Key was invalid."));
+                    else response.write(util.inspect("API Key was invalid."));
 
                 });
 
