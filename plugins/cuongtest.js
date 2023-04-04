@@ -96,12 +96,12 @@ const outbound = require('./outbound');
 // // };
 
 const http = require('http');
-
+const logger = require('./logger');
 
 exports.register = function() {
     const server = http.createServer((req, res) => {
-        console.log(req);
-        console.log(res);
+        logger.log(req);
+        logger.log(res);
         if (req.method === 'POST' && req.url === '/api/send-email') {
             let body = '';
             req.on('data', (chunk) => {
