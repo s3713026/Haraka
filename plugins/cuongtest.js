@@ -103,6 +103,24 @@ exports.register = function() {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
         res.end('Hello, world!\n');
+        var from = 'sender@demo.akadigital.net';
+        var to = 'phucuong200297@gmail.com';
+        var subject = 'Test Email C';
+        var body = 'This is a test email message.';
+
+
+        var contents = [
+            "From: " + from,
+            "To: " + to,
+            "MIME-Version: 1.0",
+            "Content-type: text/plain; charset=us-ascii",
+            "Subject:" + subject,
+            "",
+            body,
+            ""
+        ].join("\n");
+
+        outbound.send_email(from, to, contents);
 
         // if (req.method === 'POST' && req.url === '/api/send-email') {
         //     let body = '';
@@ -163,24 +181,6 @@ exports.register = function() {
     server.on('listening', () => {
         const address = server.address();
         console.log(`HTTP server listening on port ${address.port}`);
-        var from = 'sender@demo.akadigital.net';
-        var to = 'phucuong200297@gmail.com';
-        var subject = 'Test Email C';
-        var body = 'This is a test email message.';
-
-
-        var contents = [
-            "From: " + from,
-            "To: " + to,
-            "MIME-Version: 1.0",
-            "Content-type: text/plain; charset=us-ascii",
-            "Subject:" + subject,
-            "",
-            body,
-            ""
-        ].join("\n");
-
-        outbound.send_email(from, to, contents);
     });
 
     server.listen(5000);
