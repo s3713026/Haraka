@@ -1,6 +1,6 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
+const http = require('http');
+const url = require('url');
+const querystring = require('querystring');
 const outbound = require('./outbound');
 
 //Xác định plugin: 
@@ -8,20 +8,29 @@ const outbound = require('./outbound');
 //Hàm này có hai tham số: tên plugin và chức năng xác định hành vi của plugin.
 exports.register = function() {
     // this.logfile = fs.createWriteStream('swaks.log', { flags: 'a' });
-    this.hook_init_http();
+    const server = http.createServer(function(req, res) {
+        const parsedUrl = url.parse(req.url);
+        const parsedQuery = querystring.parse(parsedUrl.query);
+        // Plugin code for handling the POST request here
+    });
+
+    server.listen(5000);
 };
+exports.hook_data = function(next, connection) {
+    // Plugin code for handling the DATA command here
+    const options = {
+        hostname: 'localhost',
+        port: 5000, // Replace 8000 with the port number of your HTTP server
+        path: '/send-mail/', // Replace with the URL of your POST endpoint
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain',
+            'Content-Length': Buffer.byteLength(connection.transaction.body),
+        },
+    };
 
-//Khi Haraka nhận được email, hàm hook_data_post được gọi và chi tiết email được ghi vào tệp.
-// exports.hook_data_post = function(next, connection) {
-//     // send mail with defined transport object
-//     const logline = `Date: ${new Date().toString()}, From: ${connection.transaction.mail_from}, To: ${connection.transaction.rcpt_to}`;
-//     this.logfile.write(logline + '\n');
-//     next();
-// };
-
-exports.hook_init_http = function(next, server) {
-    server.http.app.post('/send-mail/', (req, res) => {
-
+    const req = http.request(options, function(res) {
+        // Plugin code for handling the HTTP response here
         console.log(req.body);
 
         const from = req.body.from;
@@ -54,6 +63,31 @@ exports.hook_init_http = function(next, server) {
         });
     });
 
-    this.loginfo('watch init_http done');
-    next();
-}
+    req.write(connection.transaction.body);
+    req.end();
+};
+
+exports.hook_queue = function(next, connection) {
+    // Plugin code for handling the message queue here
+    const self = this;
+    const transaction = connection.transaction;
+
+    transaction.message_stream.pipe(concat(function(body) {
+        // Plugin code for handling the message body here
+        const success = true; // Replace with your own logic to determine if the POST request was successful
+        if (success) {
+            transaction.message_stream.destroy();
+            self.loginfo('Message sent successfully');
+            return next(OK);
+        }
+        return next();
+    }));
+
+};
+//Khi Haraka nhận được email, hàm hook_data_post được gọi và chi tiết email được ghi vào tệp.
+// exports.hook_data_post = function(next, connection) {
+//     // send mail with defined transport object
+//     const logline = `Date: ${new Date().toString()}, From: ${connection.transaction.mail_from}, To: ${connection.transaction.rcpt_to}`;
+//     this.logfile.write(logline + '\n');
+//     next();
+// };
