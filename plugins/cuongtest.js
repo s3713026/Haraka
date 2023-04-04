@@ -67,23 +67,23 @@ exports.hook_data = function(next, connection) {
     req.end();
 };
 
-exports.hook_queue = function(next, connection) {
-    // Plugin code for handling the message queue here
-    const self = this;
-    const transaction = connection.transaction;
+// exports.hook_queue = function(next, connection) {
+//     // Plugin code for handling the message queue here
+//     const self = this;
+//     const transaction = connection.transaction;
 
-    transaction.message_stream.pipe(concat(function(body) {
-        // Plugin code for handling the message body here
-        const success = true; // Replace with your own logic to determine if the POST request was successful
-        if (success) {
-            transaction.message_stream.destroy();
-            self.loginfo('Message sent successfully');
-            return next(OK);
-        }
-        return next();
-    }));
+//     transaction.message_stream.pipe(concat(function(body) {
+//         // Plugin code for handling the message body here
+//         const success = true; // Replace with your own logic to determine if the POST request was successful
+//         if (success) {
+//             transaction.message_stream.destroy();
+//             self.loginfo('Message sent successfully');
+//             return next(OK);
+//         }
+//         return next();
+//     }));
 
-};
+// };
 //Khi Haraka nhận được email, hàm hook_data_post được gọi và chi tiết email được ghi vào tệp.
 // exports.hook_data_post = function(next, connection) {
 //     // send mail with defined transport object
