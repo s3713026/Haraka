@@ -95,60 +95,23 @@ const outbound = require('./outbound');
 // //     next();
 // // };
 
-const nodemailer = require('nodemailer');
+// Load the required modules
+const http = require('http');
 
+// Define the plugin function
 exports.register = function() {
-    // Add listener for the `data` event
-    this.logdebug('registering my-plugin');
-    this.on('data', function(connection, chunk) {
-        // Check if the message is an HTTP request
-        if (connection.transaction) {
-            var txn = connection.transaction;
-            var req = txn.req;
-
-            // Check if the request is a POST request
-            if (req.method === 'POST') {
-                // Read the message body
-                var body = '';
-                req.on('data', function(chunk) {
-                    body += chunk.toString();
-                });
-
-                req.on('end', function() {
-                    // Parse the message body
-                    const from = req.body.from;
-                    const to = req.body.to;
-                    const subject = req.body.subject;
-                    const body = req.body.body;
-                    //    var from = 'sender@demo.akadigital.net';
-                    //    var to = 'phucuong200297@gmail.com';
-                    //    var subject = 'Test Email C++';
-                    //    var body = 'This is a test email message.';
-                    const message = [
-                        "From: " + from,
-                        "To: " + to,
-                        "MIME-Version: 1.0",
-                        "Content-type: text/plain; charset=us-ascii",
-                        "Subject: " + subject,
-                        "",
-                        body,
-                        ""
-                    ].join("\n");
-
-                    outbound.send_email(from, to, message, (err, result) => {
-                        if (err) {
-                            console.error('Error sending email:', err);
-                            res.status(500).send('Error sending email');
-                        } else {
-                            console.log('Email sent successfully:', result);
-                            res.status(200).send('Email sent successfully');
-                        }
-                    });
-                });
-            }
-        }
-
-        // Call `next` to continue the message processing pipeline
-        connection.next();
+    // Create an HTTP server and listen on port 8080
+    const server = http.createServer((req, res) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('Hello, world!\n');
     });
+    server.listen(5000, () => {
+        console.log('HTTP server listening on port 8080');
+    });
+};
+
+exports.hook_rcpt = function(next, connection, params) {
+    // This is just an example hook function
+    next();
 };
