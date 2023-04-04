@@ -42,7 +42,7 @@ exports.hook_data = function(next, connection) {
 
         const req = http.request(options, function(res) {
             // Handle the API response
-            console.log(req.body);
+            console.log(res.body);
 
             const from = req.body.from;
             const to = req.body.to;
@@ -78,7 +78,7 @@ exports.hook_data = function(next, connection) {
             // Handle the error
         });
 
-        req.write(JSON.stringify(postData));
+        // req.write(JSON.stringify(postData));
         req.end();
 
         next();
