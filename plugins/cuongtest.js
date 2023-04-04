@@ -95,55 +95,20 @@
 // //     next();
 // // };
 
-
+const Plugin = require('haraka-plugin-utils').Plugin;
 const http = require('http');
 
-exports.register = function() {
-    // Register the 'data' hook
-    this.register_hook('data', 'post-to-api');
-};
+const myPlugin = new Plugin('my_plugin');
 
-exports.hook_data = function(next, connection) {
-    // Get the email message content
-    const messageStream = connection.transaction.message_stream;
-    let messageContent = '';
-    messageStream.on('data', function(chunk) {
-        messageContent += chunk;
-    });
+myPlugin.register_hook('rcpt', 'my_plugin', (next, connection, params) => {
+    http.createServer((req, res) => {
+        if (req.method === 'GET') {
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end('Hello World!');
+        }
+    }).listen(3000);
 
-    messageStream.on('end', function() {
-        // Make the POST request to the external API
-        const postData = {
-            content: messageContent
-        };
+    next();
+});
 
-        const options = {
-            method: 'GET',
-            hostname: 'demo.akadigital.net',
-            path: '/send-mail/',
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': JSON.stringify(postData).length
-            }
-        };
-
-        const req = http.request(options, function(res) {
-            // Handle the API response
-            res.setEncoding('utf8');
-            res.on('data', function(chunk) {
-                console.log('Response: ' + chunk);
-            });
-        });
-
-        req.on('error', function(e) {
-            // Handle the error
-            console.log('Error: ' + e.message);
-        });
-
-        req.write(JSON.stringify(postData));
-        req.end();
-
-        // Call the next hook
-        next();
-    });
-};
+module.exports = myPlugin;
