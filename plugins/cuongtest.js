@@ -96,12 +96,15 @@ const outbound = require('./outbound');
 // // };
 
 const http = require('http');
-const logger = require('./logger');
+
 
 exports.register = function() {
     const server = http.createServer((req, res) => {
-        logger.log(req);
-        logger.log(res);
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('Hello, world!\n');
+        console.log(res);
+        console.log(req);
         if (req.method === 'POST' && req.url === '/api/send-email') {
             let body = '';
             req.on('data', (chunk) => {
