@@ -96,10 +96,12 @@ const outbound = require('./outbound');
 // // };
 
 const http = require('http');
-const { createTransport } = require('nodemailer');
+
 
 exports.register = function() {
     const server = http.createServer((req, res) => {
+        console.log(req);
+        console.log(res);
         if (req.method === 'POST' && req.url === '/api/send-email') {
             let body = '';
             req.on('data', (chunk) => {
