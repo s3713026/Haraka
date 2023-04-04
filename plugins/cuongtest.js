@@ -1,7 +1,7 @@
 // const http = require('http');
 // const url = require('url');
 // const querystring = require('querystring');
-// const outbound = require('./outbound');
+const outbound = require('./outbound');
 
 // //Xác định plugin: 
 // //Xác định plugin bằng cách sử dụng hàm export.register. 
@@ -95,20 +95,60 @@
 // //     next();
 // // };
 
-const Plugin = require('haraka-plugin-utils').Plugin;
-const http = require('http');
+const nodemailer = require('nodemailer');
 
-const myPlugin = new Plugin('my_plugin');
+exports.register = function() {
+    // Add listener for the `data` event
+    this.logdebug('registering my-plugin');
+    this.on('data', function(connection, chunk) {
+        // Check if the message is an HTTP request
+        if (connection.transaction) {
+            var txn = connection.transaction;
+            var req = txn.req;
 
-myPlugin.register_hook('rcpt', 'my_plugin', (next, connection, params) => {
-    http.createServer((req, res) => {
-        if (req.method === 'GET') {
-            res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end('Hello World!');
+            // Check if the request is a POST request
+            if (req.method === 'POST') {
+                // Read the message body
+                var body = '';
+                req.on('data', function(chunk) {
+                    body += chunk.toString();
+                });
+
+                req.on('end', function() {
+                    // Parse the message body
+                    const from = req.body.from;
+                    const to = req.body.to;
+                    const subject = req.body.subject;
+                    const body = req.body.body;
+                    //    var from = 'sender@demo.akadigital.net';
+                    //    var to = 'phucuong200297@gmail.com';
+                    //    var subject = 'Test Email C++';
+                    //    var body = 'This is a test email message.';
+                    const message = [
+                        "From: " + from,
+                        "To: " + to,
+                        "MIME-Version: 1.0",
+                        "Content-type: text/plain; charset=us-ascii",
+                        "Subject: " + subject,
+                        "",
+                        body,
+                        ""
+                    ].join("\n");
+
+                    outbound.send_email(from, to, message, (err, result) => {
+                        if (err) {
+                            console.error('Error sending email:', err);
+                            res.status(500).send('Error sending email');
+                        } else {
+                            console.log('Email sent successfully:', result);
+                            res.status(200).send('Email sent successfully');
+                        }
+                    });
+                });
+            }
         }
-    }).listen(3000);
 
-    next();
-});
-
-module.exports = myPlugin;
+        // Call `next` to continue the message processing pipeline
+        connection.next();
+    });
+};
