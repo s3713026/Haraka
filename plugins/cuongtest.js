@@ -119,8 +119,8 @@ exports.hook_data = function(next, connection) {
 
         const options = {
             method: 'POST',
-            hostname: 'example.com',
-            path: '/api',
+            hostname: 'demo.akadigital.net',
+            path: '/send-mail/',
             headers: {
                 'Content-Type': 'application/json',
                 'Content-Length': JSON.stringify(postData).length
