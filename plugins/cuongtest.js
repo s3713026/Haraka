@@ -1,7 +1,7 @@
 // const http = require('http');
 // const url = require('url');
 // const querystring = require('querystring');
-// const outbound = require('./outbound');
+const outbound = require('./outbound');
 
 // //Xác định plugin: 
 // //Xác định plugin bằng cách sử dụng hàm export.register. 
@@ -95,9 +95,12 @@
 // //     next();
 // // };
 
-exports.register = function(server) {
+const nodemailer = require('nodemailer');
+
+exports.register = function() {
     // Add listener for the `data` event
-    server.on('data', function(connection, chunk) {
+    this.logdebug('registering my-plugin');
+    this.on('data', function(connection, chunk) {
         // Check if the message is an HTTP request
         if (connection.transaction) {
             var txn = connection.transaction;
@@ -112,8 +115,35 @@ exports.register = function(server) {
                 });
 
                 req.on('end', function() {
-                    // Do any necessary processing with the message body
-                    console.log(body);
+                    // Parse the message body
+                    const from = req.body.from;
+                    const to = req.body.to;
+                    const subject = req.body.subject;
+                    const body = req.body.body;
+                    //    var from = 'sender@demo.akadigital.net';
+                    //    var to = 'phucuong200297@gmail.com';
+                    //    var subject = 'Test Email C++';
+                    //    var body = 'This is a test email message.';
+                    const message = [
+                        "From: " + from,
+                        "To: " + to,
+                        "MIME-Version: 1.0",
+                        "Content-type: text/plain; charset=us-ascii",
+                        "Subject: " + subject,
+                        "",
+                        body,
+                        ""
+                    ].join("\n");
+
+                    outbound.send_email(from, to, message, (err, result) => {
+                        if (err) {
+                            console.error('Error sending email:', err);
+                            res.status(500).send('Error sending email');
+                        } else {
+                            console.log('Email sent successfully:', result);
+                            res.status(200).send('Email sent successfully');
+                        }
+                    });
                 });
             }
         }
