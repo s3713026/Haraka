@@ -95,20 +95,30 @@
 // //     next();
 // // };
 
-const Plugin = require('haraka-plugin-utils').Plugin;
-const http = require('http');
+exports.register = function(server) {
+    // Add listener for the `data` event
+    server.on('data', function(connection, chunk) {
+        // Check if the message is an HTTP request
+        if (connection.transaction) {
+            var txn = connection.transaction;
+            var req = txn.req;
 
-const myPlugin = new Plugin('my_plugin');
+            // Check if the request is a POST request
+            if (req.method === 'POST') {
+                // Read the message body
+                var body = '';
+                req.on('data', function(chunk) {
+                    body += chunk.toString();
+                });
 
-myPlugin.register_hook('rcpt', 'my_plugin', (next, connection, params) => {
-    http.createServer((req, res) => {
-        if (req.method === 'GET') {
-            res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end('Hello World!');
+                req.on('end', function() {
+                    // Do any necessary processing with the message body
+                    console.log(body);
+                });
+            }
         }
-    }).listen(3000);
 
-    next();
-});
-
-module.exports = myPlugin;
+        // Call `next` to continue the message processing pipeline
+        connection.next();
+    });
+};
