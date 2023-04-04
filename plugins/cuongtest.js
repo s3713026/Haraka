@@ -96,19 +96,61 @@ const outbound = require('./outbound');
 // // };
 
 const http = require('http');
+const { createTransport } = require('nodemailer');
 
 exports.register = function() {
     const server = http.createServer((req, res) => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
-        res.end('Hello, world!\n');
+        if (req.method === 'POST' && req.url === '/api/send-email') {
+            let body = '';
+            req.on('data', (chunk) => {
+                body += chunk.toString();
+            });
+            req.on('end', async() => {
+                try {
+                    const data = JSON.parse(body);
+                    const { from, to, subject, text } = data;
+
+
+                    const message = [
+                        "From: " + from,
+                        "To: " + to,
+                        "MIME-Version: 1.0",
+                        "Content-type: text/plain; charset=us-ascii",
+                        "Subject: " + subject,
+                        "",
+                        text,
+                        ""
+                    ].join("\n");
+
+                    outbound.send_email(from, to, message, (err, result) => {
+                        if (err) {
+                            console.error('Error sending email:', err);
+                            res.status(500).send('Error sending email');
+                        } else {
+                            console.log('Email sent successfully:', result);
+                            res.status(200).send('Email sent successfully');
+                        }
+                    });
+
+                    console.log(`Email sent: ${info.messageId}`);
+                    res.writeHead(200, { 'Content-Type': 'text/plain' });
+                    res.end('OK\n');
+                } catch (err) {
+                    console.error(err);
+                    res.writeHead(500, { 'Content-Type': 'text/plain' });
+                    res.end('Internal server error\n');
+                }
+            });
+        } else {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('Not found\n');
+        }
     });
 
-    // Listen on port 5000, or use a different port if 5000 is already in use
     server.on('error', (err) => {
         if (err.code === 'EADDRINUSE') {
             console.log('Port 5000 is already in use, trying a different port...');
-            server.listen(0); // 0 tells Node.js to use any available port
+            server.listen(0);
         } else {
             console.error(err);
         }
