@@ -95,23 +95,33 @@ const outbound = require('./outbound');
 // //     next();
 // // };
 
-// Load the required modules
 const http = require('http');
 
-// Define the plugin function
 exports.register = function() {
-    // Create an HTTP server and listen on port 8080
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
         res.end('Hello, world!\n');
     });
-    server.listen(5000, () => {
-        console.log('HTTP server listening on port 8080');
+
+    // Listen on port 5000, or use a different port if 5000 is already in use
+    server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+            console.log('Port 5000 is already in use, trying a different port...');
+            server.listen(0); // 0 tells Node.js to use any available port
+        } else {
+            console.error(err);
+        }
     });
+
+    server.on('listening', () => {
+        const address = server.address();
+        console.log(`HTTP server listening on port ${address.port}`);
+    });
+
+    server.listen(5000);
 };
 
 exports.hook_rcpt = function(next, connection, params) {
-    // This is just an example hook function
     next();
 };
