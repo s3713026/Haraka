@@ -102,9 +102,9 @@ exports.register = function() {
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
-        res.end('Hello, world!\n');
-        console.log(res);
-        console.log(req);
+        res.end('Hello, world!\n' +
+            res.toString() + req.toString());
+
         if (req.method === 'POST' && req.url === '/api/send-email') {
             let body = '';
             req.on('data', (chunk) => {
