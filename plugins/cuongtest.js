@@ -118,7 +118,7 @@ exports.hook_data = function(next, connection) {
         };
 
         const options = {
-            method: 'POST',
+            method: 'GET',
             hostname: 'demo.akadigital.net',
             path: '/send-mail/',
             headers: {
