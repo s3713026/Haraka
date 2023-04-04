@@ -6,16 +6,16 @@ const outbound = require('./outbound');
 //Xác định plugin: 
 //Xác định plugin bằng cách sử dụng hàm export.register. 
 //Hàm này có hai tham số: tên plugin và chức năng xác định hành vi của plugin.
-exports.register = function() {
-    // this.logfile = fs.createWriteStream('swaks.log', { flags: 'a' });
-    const server = http.createServer(function(req, res) {
-        const parsedUrl = url.parse(req.url);
-        const parsedQuery = querystring.parse(parsedUrl.query);
-        // Plugin code for handling the POST request here
-    });
+// exports.register = function() {
+//     // this.logfile = fs.createWriteStream('swaks.log', { flags: 'a' });
+//     const server = http.createServer(function(req, res) {
+//         const parsedUrl = url.parse(req.url);
+//         const parsedQuery = querystring.parse(parsedUrl.query);
+//         // Plugin code for handling the POST request here
+//     });
 
-    server.listen(5000);
-};
+//     server.listen(5000);
+// };
 
 exports.hook_data = function(next, connection) {
     const messageStream = connection.transaction.message_stream;
