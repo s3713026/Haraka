@@ -102,7 +102,7 @@ exports.register = function() {
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
-        res.end('body');
+        res.end(body);
 
 
         if (req.method === 'POST' && req.url === '/api/send-email') {
