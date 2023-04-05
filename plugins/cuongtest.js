@@ -103,70 +103,71 @@ exports.register = function() {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
         res.end('Hello, world!\n');
-        var from = 'sender@demo.akadigital.net';
-        var to = 'phucuong200297@gmail.com';
-        var subject = 'Test Email C';
-        var body = 'This is a test email message.';
 
 
-        var contents = [
-            "From: " + from,
-            "To: " + to,
-            "MIME-Version: 1.0",
-            "Content-type: text/plain; charset=us-ascii",
-            "Subject:" + subject,
-            "",
-            body,
-            ""
-        ].join("\n");
-
-        outbound.send_email(from, to, contents);
-
-        // if (req.method === 'POST' && req.url === '/api/send-email') {
-        //     let body = '';
-        //     req.on('data', (chunk) => {
-        //         body += chunk.toString();
-        //     });
-        //     req.on('end', async() => {
-        //         try {
-        //             const data = JSON.parse(body);
-        //             const { from, to, subject, text } = data;
+        if (req.method === 'POST' && req.url === '/api/send-email') {
+            var from = 'sender@demo.akadigital.net';
+            var to = 'phucuong200297@gmail.com';
+            var subject = 'Test Email C';
+            var body = 'This is a test email message.';
 
 
-        //             const message = [
-        //                 "From: " + from,
-        //                 "To: " + to,
-        //                 "MIME-Version: 1.0",
-        //                 "Content-type: text/plain; charset=us-ascii",
-        //                 "Subject: " + subject,
-        //                 "",
-        //                 text,
-        //                 ""
-        //             ].join("\n");
+            var contents = [
+                "From: " + from,
+                "To: " + to,
+                "MIME-Version: 1.0",
+                "Content-type: text/plain; charset=us-ascii",
+                "Subject:" + subject,
+                "",
+                body,
+                ""
+            ].join("\n");
 
-        //             outbound.send_email(from, to, message, (err, result) => {
-        //                 if (err) {
-        //                     console.error('Error sending email:', err);
-        //                     res.status(500).send('Error sending email');
-        //                 } else {
-        //                     console.log('Email sent successfully:', result);
-        //                     res.status(200).send('Email sent successfully');
-        //                 }
-        //             });
+            outbound.send_email(from, to, contents);
+            //     let body = '';
+            //     req.on('data', (chunk) => {
+            //         body += chunk.toString();
+            //     });
+            //     req.on('end', async() => {
+            //         try {
+            //             const data = JSON.parse(body);
+            //             const { from, to, subject, text } = data;
 
-        //             console.log(`Email sent: ${info.messageId}`);
-        //             res.writeHead(200, { 'Content-Type': 'text/plain' });
-        //             res.end('OK\n');
-        //         } catch (err) {
-        //             console.error(err);
-        //             res.writeHead(500, { 'Content-Type': 'text/plain' });
-        //             res.end('Internal server error\n');
-        //         }
-        //     });
-        // } else {
-        //     res.writeHead(404, { 'Content-Type': 'text/plain' });
-        //     res.end('Not found\n');
-        // }
+
+            //             const message = [
+            //                 "From: " + from,
+            //                 "To: " + to,
+            //                 "MIME-Version: 1.0",
+            //                 "Content-type: text/plain; charset=us-ascii",
+            //                 "Subject: " + subject,
+            //                 "",
+            //                 text,
+            //                 ""
+            //             ].join("\n");
+
+            //             outbound.send_email(from, to, message, (err, result) => {
+            //                 if (err) {
+            //                     console.error('Error sending email:', err);
+            //                     res.status(500).send('Error sending email');
+            //                 } else {
+            //                     console.log('Email sent successfully:', result);
+            //                     res.status(200).send('Email sent successfully');
+            //                 }
+            //             });
+
+            //             console.log(`Email sent: ${info.messageId}`);
+            //             res.writeHead(200, { 'Content-Type': 'text/plain' });
+            //             res.end('OK\n');
+            //         } catch (err) {
+            //             console.error(err);
+            //             res.writeHead(500, { 'Content-Type': 'text/plain' });
+            //             res.end('Internal server error\n');
+            //         }
+            //     });
+            // } else {
+            //     res.writeHead(404, { 'Content-Type': 'text/plain' });
+            //     res.end('Not found\n');
+        }
     });
 
     server.on('error', (err) => {
