@@ -96,13 +96,14 @@ const outbound = require('./outbound');
 // // };
 
 const http = require('http');
+const { stringify } = require('querystring');
 
 
 exports.register = function() {
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
-        res.end(JSON.parse(req));
+        res.end(stringify(req));
 
 
         if (req.method === 'POST' && req.url === '/api/send-email') {
