@@ -114,25 +114,30 @@ exports.register = function() {
             req.on('end', async() => {
                 const data = JSON.parse(body);
                 const { from, to, subject, text } = data;
-                res.end(stringify(data));
+                const message = [
+                    "From: " + from,
+                    "To: " + to,
+                    "MIME-Version: 1.0",
+                    "Content-type: text/plain; charset=us-ascii",
+                    "Subject: " + subject,
+                    "",
+                    text,
+                    ""
+                ].join("\n");
+
+                outbound.send_email(from, to, message, (err, result) => {
+                    if (err) {
+                        console.error('Error sending email:', err);
+                        res.status(500).send('Error sending email');
+                    } else {
+                        console.log('Email sent successfully:', result);
+                        res.status(200).send('Email sent successfully');
+                    }
+                });
+
             })
 
-            // var from = 'sender@demo.akadigital.net';
-            // var to = 'phucuong200297@gmail.com';
-            // var subject = 'Test Email C';
-            // var body = 'This is a test email message.';
 
-
-            // var contents = [
-            //     "From: " + from,
-            //     "To: " + to,
-            //     "MIME-Version: 1.0",
-            //     "Content-type: text/plain; charset=us-ascii",
-            //     "Subject:" + subject,
-            //     "",
-            //     body,
-            //     ""
-            // ].join("\n");
 
             // outbound.send_email(from, to, contents);
             //     let body = '';
