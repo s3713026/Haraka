@@ -114,6 +114,7 @@ exports.register = function() {
             req.on('end', async() => {
                 const data = JSON.parse(body);
                 const { from, to, subject, text } = data;
+                res.end(stringify(data));
                 const message = [
                     "From: " + from,
                     "To: " + to,
@@ -128,13 +129,12 @@ exports.register = function() {
                 outbound.send_email(from, to, message, (err, result) => {
                     if (err) {
                         console.error('Error sending email:', err);
-                        res.status(500).send('Error sending email');
+                        res.end('Error sending email');
                     } else {
                         console.log('Email sent successfully:', result);
-                        res.status(200).send('Email sent successfully');
+                        res.end('Email sent successfully');
                     }
                 });
-
             })
 
 
