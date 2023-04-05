@@ -114,9 +114,9 @@ exports.register = function() {
             req.on('end', async() => {
                 const data = JSON.parse(body);
                 const { from, to, subject, text } = data;
-
+                res.end(stringify(data));
             })
-            res.end(stringify(body));
+
             // var from = 'sender@demo.akadigital.net';
             // var to = 'phucuong200297@gmail.com';
             // var subject = 'Test Email C';
