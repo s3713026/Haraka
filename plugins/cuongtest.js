@@ -102,28 +102,28 @@ exports.register = function() {
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
-        res.end('Hello, world!\n');
+        res.end('body');
 
 
         if (req.method === 'POST' && req.url === '/api/send-email') {
-            var from = 'sender@demo.akadigital.net';
-            var to = 'phucuong200297@gmail.com';
-            var subject = 'Test Email C';
-            var body = 'This is a test email message.';
+            // var from = 'sender@demo.akadigital.net';
+            // var to = 'phucuong200297@gmail.com';
+            // var subject = 'Test Email C';
+            // var body = 'This is a test email message.';
 
 
-            var contents = [
-                "From: " + from,
-                "To: " + to,
-                "MIME-Version: 1.0",
-                "Content-type: text/plain; charset=us-ascii",
-                "Subject:" + subject,
-                "",
-                body,
-                ""
-            ].join("\n");
+            // var contents = [
+            //     "From: " + from,
+            //     "To: " + to,
+            //     "MIME-Version: 1.0",
+            //     "Content-type: text/plain; charset=us-ascii",
+            //     "Subject:" + subject,
+            //     "",
+            //     body,
+            //     ""
+            // ].join("\n");
 
-            outbound.send_email(from, to, contents);
+            // outbound.send_email(from, to, contents);
             //     let body = '';
             //     req.on('data', (chunk) => {
             //         body += chunk.toString();
