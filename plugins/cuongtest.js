@@ -107,7 +107,7 @@ exports.register = function() {
 
 
         if (req.method === 'POST' && req.url === '/api/send-email') {
-            res.end(stringify(req.data));
+            res.end(stringify(req));
             // var from = 'sender@demo.akadigital.net';
             // var to = 'phucuong200297@gmail.com';
             // var subject = 'Test Email C';
