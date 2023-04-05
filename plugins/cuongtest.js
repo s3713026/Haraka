@@ -116,7 +116,7 @@ exports.register = function() {
                 const { from, to, subject, text } = data;
 
             })
-            res.end(stringify(data));
+            res.end(stringify(body));
             // var from = 'sender@demo.akadigital.net';
             // var to = 'phucuong200297@gmail.com';
             // var subject = 'Test Email C';
