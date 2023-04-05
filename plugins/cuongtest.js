@@ -103,10 +103,11 @@ exports.register = function() {
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
-        res.end(stringify(req.data));
+
 
 
         if (req.method === 'POST' && req.url === '/api/send-email') {
+            res.end(stringify(req.data));
             // var from = 'sender@demo.akadigital.net';
             // var to = 'phucuong200297@gmail.com';
             // var subject = 'Test Email C';
