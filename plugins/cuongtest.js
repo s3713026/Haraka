@@ -47,16 +47,21 @@ exports.register = function() {
                 const htmlBody = '<html><body><h1>Your HTML content here</h1></body></html>';
 
                 const message = `
-                    <html>
-                      <head>
-                        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                        <title>${subject}</title>
-                      </head>
-                      <body>
-                        ${htmlBody}
-                      </body>
-                    </html>
-                  `;
+                    MIME-Version: 1.0
+                    Content-Type: multipart/alternative; boundary="boundary"
+
+                    --boundary
+                    Content-Type: text/plain; charset=us-ascii
+
+                    ${subject}
+
+                    --boundary
+                    Content-Type: text/html; charset=utf-8
+
+                    ${htmlBody}
+
+                    --boundary--
+                `;
 
 
                 outbound.send_email(from, to, message, (err, result) => {
