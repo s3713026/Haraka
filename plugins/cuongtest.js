@@ -113,7 +113,7 @@ exports.register = function() {
             });
             req.on('end', async() => {
                 const data = JSON.parse(body);
-                const { from, to, subject, text } = data;
+                const { from, to, subject, text, html } = data;
                 res.end(stringify(data));
                 const message = [
                     "From: " + from,
