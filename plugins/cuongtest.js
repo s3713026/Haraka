@@ -44,7 +44,7 @@ exports.register = function() {
                 //     html: html,
                 //     // message_stream: messageStream
                 // };
-                const htmlBody = '<html><body><h1>Your HTML content here</h1></body></html>';
+                const htmlBody = 'Hello';
 
                 const message = `
                     From: ${from}
