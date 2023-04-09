@@ -2,7 +2,6 @@ const outbound = require('./outbound');
 const mailcomposer = require('mailcomposer');
 const http = require('http');
 const { stringify } = require('querystring');
-const messageStream = mail.build();
 
 
 exports.register = function() {
@@ -36,6 +35,7 @@ exports.register = function() {
                     text: text,
                     html: html
                 });
+                const messageStream = mail.build();
 
                 const messageOptions = {
                     from: from,
