@@ -35,14 +35,14 @@ exports.register = function() {
                     text: text,
                     html: html
                 });
-                const messageStream = message.build();
+                // const messageStream = message.build();
 
                 const messageOptions = {
                     from: from,
                     to: to,
                     subject: 'Subject of the email',
                     html: html,
-                    message_stream: messageStream
+                    // message_stream: messageStream
                 };
 
 
