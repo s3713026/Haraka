@@ -17,17 +17,17 @@ exports.register = function() {
                 const data = JSON.parse(body);
                 const { from, to, subject, text, html } = data;
                 res.end(stringify(data));
-                // const message = [
-                //     "From: " + from,
-                //     "To: " + to,
-                //     "MIME-Version: 1.0",
-                //     "Content-type: text/plain; charset=us-ascii",
-                //     "Subject: " + subject,
-                //     "",
-                //     text,
-                //     html,
-                //     ""
-                // ].join("\n");
+                const message = [
+                    "From: " + from,
+                    "To: " + to,
+                    "MIME-Version: 1.0",
+                    "Content-type: text/plain; charset=us-ascii",
+                    "Subject: " + subject,
+                    "",
+                    text,
+                    html,
+                    ""
+                ].join("\n");
                 // const message = mailcomposer({
                 //     from: from,
                 //     to: to,
@@ -44,27 +44,7 @@ exports.register = function() {
                 //     html: html,
                 //     // message_stream: messageStream
                 // };
-                const htmlBody = 'Hello';
 
-                const message = `
-                    From: ${from}
-                    To: ${to}
-                    Subject: ${subject}
-                    MIME-Version: 1.0
-                    Content-Type: multipart/alternative; boundary="boundary"
-
-                    --boundary
-                    Content-Type: text/plain; charset=us-ascii
-
-                    
-
-                    --boundary
-                    Content-Type: text/html; charset=utf-8
-
-                    ${htmlBody}
-
-                    --boundary--
-                `;
 
 
                 outbound.send_email(from, to, message, (err, result) => {
