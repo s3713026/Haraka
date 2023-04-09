@@ -2,6 +2,7 @@ const outbound = require('./outbound');
 const mailcomposer = require('mailcomposer');
 const http = require('http');
 const { stringify } = require('querystring');
+const messageStream = mail.build();
 
 
 exports.register = function() {
@@ -28,7 +29,7 @@ exports.register = function() {
                 //     html,
                 //     ""
                 // ].join("\n");
-                const message = mailcomposer({
+                const mail = mailcomposer({
                     from: from,
                     to: to,
                     subject: subjec,
@@ -36,16 +37,31 @@ exports.register = function() {
                     html: html
                 });
 
+                const messageOptions = {
+                    from: from,
+                    to: recipient,
+                    subject: 'Subject of the email',
+                    html: html,
+                    message_stream: messageStream
+                };
 
-                outbound.send_email(from, to, message, (err, result) => {
+
+                // outbound.send_email(from, to, message, (err, result) => {
+                //     if (err) {
+                //         console.error('Error sending email:', err);
+                //         res.end('Error sending email');
+                //     } else {
+                //         console.log('Email sent successfully:', result);
+                //         res.end('Email sent successfully');
+                //     }
+                // });
+                outbound.send_email(messageOptions, (err, res) => {
                     if (err) {
-                        console.error('Error sending email:', err);
-                        res.end('Error sending email');
+                        plugin.logerror(`Error sending email: ${err}`);
                     } else {
-                        console.log('Email sent successfully:', result);
-                        res.end('Email sent successfully');
+                        plugin.loginfo(`Email sent: ${res}`);
                     }
-                });
+                })
             })
 
 
