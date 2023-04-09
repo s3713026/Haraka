@@ -2,6 +2,7 @@ const outbound = require('./outbound');
 const mailcomposer = require('mailcomposer');
 const http = require('http');
 const { stringify } = require('querystring');
+const messageStream = mail.build();
 
 
 exports.register = function() {
@@ -28,40 +29,33 @@ exports.register = function() {
                 //     html,
                 //     ""
                 // ].join("\n");
-                const mail = mailcomposer({
+                const message = mailcomposer({
                     from: from,
                     to: to,
                     subject: subject,
                     text: text,
                     html: html
                 });
-                const messageStream = mail.build();
 
                 const messageOptions = {
                     from: from,
-                    to: to,
+                    to: recipient,
                     subject: 'Subject of the email',
                     html: html,
                     message_stream: messageStream
                 };
 
 
-                // outbound.send_email(from, to, message, (err, result) => {
-                //     if (err) {
-                //         console.error('Error sending email:', err);
-                //         res.end('Error sending email');
-                //     } else {
-                //         console.log('Email sent successfully:', result);
-                //         res.end('Email sent successfully');
-                //     }
-                // });
-                outbound.send_email(messageOptions, (err, res) => {
+                outbound.send_email(from, to, message, (err, result) => {
                     if (err) {
-                        plugin.logerror(`Error sending email: ${err}`);
+                        console.error('Error sending email:', err);
+                        res.end('Error sending email');
                     } else {
-                        plugin.loginfo(`Email sent: ${res}`);
+                        console.log('Email sent successfully:', result);
+                        res.end('Email sent successfully');
                     }
-                })
+                });
+
             })
 
 
