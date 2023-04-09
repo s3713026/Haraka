@@ -17,25 +17,36 @@ exports.register = function() {
                 const data = JSON.parse(body);
                 const { from, to, subject, text, html } = data;
                 res.end(stringify(data));
+                // const message = mailcomposer([
+                //     "From: " + from,
+                //     "To: " + to,
+                //     "MIME-Version: 1.0",
+                //     "Content-type: text/plain; charset=us-ascii",
+                //     "Subject: " + subject,
+                //     "",
+                //     text,
+                //     html,
+                //     ""
+                // ]).join("\n");
                 const message = mailcomposer([
-                    "From: " + from,
-                    "To: " + to,
-                    "MIME-Version: 1.0",
-                    "Content-type: text/plain; charset=us-ascii",
-                    "Subject: " + subject,
-                    "",
-                    text,
-                    html,
-                    ""
-                ]).join("\n");
-                // const message = mailcomposer({
-                //     from: from,
-                //     to: to,
-                //     subject: subject,
-                //     text: text,
-                //     html: html
-                // });
-                // const messageStream = message.build();
+                        "From: " + from,
+                        "To: " + to,
+                        "MIME-Version: 1.0",
+                        "Content-type: text/plain; charset=us-ascii",
+                        "Subject: " + subject,
+                        "",
+                        text,
+                        html,
+                        ""
+                    ])
+                    // const message = mailcomposer({
+                    //     from: from,
+                    //     to: to,
+                    //     subject: subject,
+                    //     text: text,
+                    //     html: html
+                    // });
+                    // const messageStream = message.build();
 
                 // const messageOptions = {
                 //     from: from,
