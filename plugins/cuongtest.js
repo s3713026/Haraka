@@ -207,5 +207,3 @@ exports.register = function() {
 exports.hook_rcpt = function(next, connection, params) {
     next();
 };
-next();
-};
