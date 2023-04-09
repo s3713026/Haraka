@@ -17,33 +17,33 @@ exports.register = function() {
                 const data = JSON.parse(body);
                 const { from, to, subject, text, html } = data;
                 res.end(stringify(data));
-                // const message = [
-                //     "From: " + from,
-                //     "To: " + to,
-                //     "MIME-Version: 1.0",
-                //     "Content-type: text/plain; charset=us-ascii",
-                //     "Subject: " + subject,
-                //     "",
-                //     text,
-                //     html,
-                //     ""
-                // ].join("\n");
-                const message = mailcomposer({
-                    from: from,
-                    to: to,
-                    subject: subject,
-                    text: text,
-                    html: html
-                });
+                const message = mailcomposer([
+                    "From: " + from,
+                    "To: " + to,
+                    "MIME-Version: 1.0",
+                    "Content-type: text/plain; charset=us-ascii",
+                    "Subject: " + subject,
+                    "",
+                    text,
+                    html,
+                    ""
+                ]).join("\n");
+                // const message = mailcomposer({
+                //     from: from,
+                //     to: to,
+                //     subject: subject,
+                //     text: text,
+                //     html: html
+                // });
                 // const messageStream = message.build();
 
-                const messageOptions = {
-                    from: from,
-                    to: to,
-                    subject: 'Subject of the email',
-                    html: html,
-                    // message_stream: messageStream
-                };
+                // const messageOptions = {
+                //     from: from,
+                //     to: to,
+                //     subject: 'Subject of the email',
+                //     html: html,
+                //     // message_stream: messageStream
+                // };
 
 
                 outbound.send_email(from, to, message, (err, result) => {
