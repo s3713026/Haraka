@@ -39,7 +39,7 @@ exports.register = function() {
 
                 const messageOptions = {
                     from: from,
-                    to: recipient,
+                    to: to,
                     subject: 'Subject of the email',
                     html: html,
                     message_stream: messageStream
