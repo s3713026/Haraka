@@ -49,13 +49,14 @@ exports.register = function() {
                 const message = `
                     From: ${from}
                     To: ${to}
+                    Subject: ${subject}
                     MIME-Version: 1.0
                     Content-Type: multipart/alternative; boundary="boundary"
 
                     --boundary
                     Content-Type: text/plain; charset=us-ascii
 
-                    ${subject}
+                    
 
                     --boundary
                     Content-Type: text/html; charset=utf-8
