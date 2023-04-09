@@ -35,7 +35,7 @@ exports.register = function() {
                     text: text,
                     html: html
                 });
-                const messageStream = mail.build();
+                const messageStream = message.build();
 
                 const messageOptions = {
                     from: from,
