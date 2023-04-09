@@ -31,7 +31,7 @@ exports.register = function() {
                 const mail = mailcomposer({
                     from: from,
                     to: to,
-                    subject: subjec,
+                    subject: subject,
                     text: text,
                     html: html
                 });
