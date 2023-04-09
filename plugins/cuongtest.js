@@ -47,6 +47,8 @@ exports.register = function() {
                 const htmlBody = '<html><body><h1>Your HTML content here</h1></body></html>';
 
                 const message = `
+                    From: ${from}
+                    To: ${to}
                     MIME-Version: 1.0
                     Content-Type: multipart/alternative; boundary="boundary"
 
