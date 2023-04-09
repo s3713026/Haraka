@@ -123,6 +123,7 @@ exports.register = function() {
                     "Subject: " + subject,
                     "",
                     text,
+                    html,
                     ""
                 ].join("\n");
 
@@ -205,4 +206,6 @@ exports.register = function() {
 
 exports.hook_rcpt = function(next, connection, params) {
     next();
+};
+next();
 };
