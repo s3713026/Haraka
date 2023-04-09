@@ -17,17 +17,17 @@ exports.register = function() {
                 const data = JSON.parse(body);
                 const { from, to, subject, text, html } = data;
                 res.end(stringify(data));
-                // const message = [
-                //     "From: " + from,
-                //     "To: " + to,
-                //     "MIME-Version: 1.0",
-                //     "Content-type: text/plain; charset=us-ascii",
-                //     "Subject: " + subject,
-                //     "",
-                //     text,
-                //     html,
-                //     ""
-                // ].join("\n");
+                const message = [
+                    "From: " + from,
+                    "To: " + to,
+                    "MIME-Version: 1.0",
+                    "Content-type: text/plain; charset=us-ascii",
+                    "Subject: " + subject,
+                    "",
+                    text,
+                    html,
+                    ""
+                ].join("\n");
                 // const message = mailcomposer({
                 //     from: from,
                 //     to: to,
@@ -44,18 +44,19 @@ exports.register = function() {
                 //     html: html,
                 //     // message_stream: messageStream
                 // };
-                const htmlBody = '<html><body><h1>Your HTML content here</h1></body></html>';
-                const message = `
-                <html>
-                  <head>
-                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                    <title>${subject}</title>
-                  </head>
-                  <body>
-                    ${htmlBody}
-                  </body>
-                </html>
-              `;
+                //     const htmlBody = '<html><body><h1>Your HTML content here</h1></body></html>';
+
+                //     const message = `
+                //     <html>
+                //       <head>
+                //         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                //         <title>${subject}</title>
+                //       </head>
+                //       <body>
+                //         ${htmlBody}
+                //       </body>
+                //     </html>
+                //   `;
 
 
                 outbound.send_email(from, to, message, (err, result) => {
