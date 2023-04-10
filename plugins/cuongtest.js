@@ -17,11 +17,24 @@ exports.register = function() {
                 const data = JSON.parse(body);
                 const { from, to, subject, text, html } = data;
                 res.end(stringify(data));
+                // const message = [
+                //     "From: " + from,
+                //     "To: " + to,
+                //     "MIME-Version: 1.0",
+                //     "Content-type: text/plain; charset=us-ascii",
+                //     "Subject: " + subject,
+                //     "",
+                //     text,
+                //     html,
+                //     ""
+                // ].join("\n");
+
                 const message = [
                     "From: " + from,
                     "To: " + to,
                     "MIME-Version: 1.0",
-                    "Content-type: text/plain; charset=us-ascii",
+                    "Content-type: text/html; charset=utf-8",
+                    "Content-Transfer-Encoding: quoted-printable",
                     "Subject: " + subject,
                     "",
                     text,
@@ -31,7 +44,7 @@ exports.register = function() {
                 // const message = mailcomposer({
                 //     from: from,
                 //     to: to,
-                //     subject: subject,
+                //     subject: subject
                 //     text: text,
                 //     html: html
                 // });
@@ -58,53 +71,6 @@ exports.register = function() {
                 });
 
             })
-
-
-
-            // outbound.send_email(from, to, contents);
-            //     let body = '';
-            //     req.on('data', (chunk) => {
-            //         body += chunk.toString();
-            //     });
-            //     req.on('end', async() => {
-            //         try {
-            //             const data = JSON.parse(body);
-            //             const { from, to, subject, text } = data;
-
-
-            //             const message = [
-            //                 "From: " + from,
-            //                 "To: " + to,
-            //                 "MIME-Version: 1.0",
-            //                 "Content-type: text/plain; charset=us-ascii",
-            //                 "Subject: " + subject,
-            //                 "",
-            //                 text,
-            //                 ""
-            //             ].join("\n");
-
-            //             outbound.send_email(from, to, message, (err, result) => {
-            //                 if (err) {
-            //                     console.error('Error sending email:', err);
-            //                     res.status(500).send('Error sending email');
-            //                 } else {
-            //                     console.log('Email sent successfully:', result);
-            //                     res.status(200).send('Email sent successfully');
-            //                 }
-            //             });
-
-            //             console.log(`Email sent: ${info.messageId}`);
-            //             res.writeHead(200, { 'Content-Type': 'text/plain' });
-            //             res.end('OK\n');
-            //         } catch (err) {
-            //             console.error(err);
-            //             res.writeHead(500, { 'Content-Type': 'text/plain' });
-            //             res.end('Internal server error\n');
-            //         }
-            //     });
-            // } else {
-            //     res.writeHead(404, { 'Content-Type': 'text/plain' });
-            //     res.end('Not found\n');
         }
     });
 
