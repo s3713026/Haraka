@@ -4,7 +4,7 @@ const http = require('http');
 const { stringify } = require('querystring');
 
 
-exports.register = function(next, connection) {
+exports.register = function() {
     //Tạo server cho API gửi email
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
@@ -20,10 +20,6 @@ exports.register = function(next, connection) {
                 const { from, to, subject, text, html } = data;
                 res.end(stringify(data));
                 // Messeage gửi mail với thông tin từ API
-                var newMessageId = '<' + 'akadigital2023@' + connection.notes.hostName + 'akadigital.net' + '>';
-                connection.transaction.message_id = newMessageId;
-                connection.transaction.remove_header('Message-Id');
-                connection.transaction.add_header('Message-Id', newMessageId);
                 const message = [
                     "From: " + from,
                     "To: " + to,
@@ -70,5 +66,17 @@ exports.register = function(next, connection) {
 };
 
 exports.hook_rcpt = function(next, connection, params) {
+    next();
+};
+
+exports.hook_data = function(next, connection) {
+    // Generate a new Message-Id
+    var newMessageId = '<' + 'akadigital2023@' + connection.notes.hostName + 'akadigital.net' + '>';
+    // Modify the headers
+    connection.transaction.message_id = newMessageId;
+    connection.transaction.remove_header('Message-Id');
+    connection.transaction.add_header('Message-Id', newMessageId);
+
+    // Continue processing
     next();
 };
