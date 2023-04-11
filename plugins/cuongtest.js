@@ -4,7 +4,7 @@ const http = require('http');
 const { stringify } = require('querystring');
 
 
-exports.register = function() {
+exports.register = function(next, connection) {
     //Tạo server cho API gửi email
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
