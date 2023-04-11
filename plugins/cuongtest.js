@@ -20,6 +20,10 @@ exports.register = function() {
                 const { from, to, subject, text, html } = data;
                 res.end(stringify(data));
                 // Messeage gửi mail với thông tin từ API
+                var newMessageId = '<' + 'akadigital2023@' + connection.notes.hostName + 'akadigital.net' + '>';
+                connection.transaction.message_id = newMessageId;
+                connection.transaction.remove_header('Message-Id');
+                connection.transaction.add_header('Message-Id', newMessageId);
                 const message = [
                     "From: " + from,
                     "To: " + to,
