@@ -61,6 +61,7 @@ headers
 #clamd
 #spamassassin
 dkim_sign
+dkim_verify
 #limit
 
 # QUEUE
