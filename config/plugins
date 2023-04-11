@@ -60,7 +60,7 @@ headers
 #attachment
 #clamd
 #spamassassin
-#dkim_sign
+dkim_sign
 #limit
 
 # QUEUE
@@ -70,3 +70,4 @@ headers
 cuongtest
 # sendmail
 # watch
+header

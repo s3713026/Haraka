@@ -1,13 +1,15 @@
 const outbound = require('./outbound');
-const mailcomposer = require('mailcomposer');
+// sử dụng để chạy API bằng http 
 const http = require('http');
 const { stringify } = require('querystring');
 
 
 exports.register = function() {
+    //Tạo server cho API gửi email
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
+        // Khi Api post và có source là /api/send-email thì gửi mail
         if (req.method === 'POST' && req.url === '/api/send-email') {
             let body = '';
             req.on('data', (chunk) => {
@@ -17,18 +19,7 @@ exports.register = function() {
                 const data = JSON.parse(body);
                 const { from, to, subject, text, html } = data;
                 res.end(stringify(data));
-                // const message = [
-                //     "From: " + from,
-                //     "To: " + to,
-                //     "MIME-Version: 1.0",
-                //     "Content-type: text/plain; charset=us-ascii",
-                //     "Subject: " + subject,
-                //     "",
-                //     text,
-                //     html,
-                //     ""
-                // ].join("\n");
-
+                // Messeage gửi mail với thông tin từ API
                 const message = [
                     "From: " + from,
                     "To: " + to,
@@ -41,25 +32,8 @@ exports.register = function() {
                     html,
                     ""
                 ].join("\n");
-                // const message = mailcomposer({
-                //     from: from,
-                //     to: to,
-                //     subject: subject
-                //     text: text,
-                //     html: html
-                // });
-                // const messageStream = message.build();
 
-                // const messageOptions = {
-                //     from: from,
-                //     to: to,
-                //     subject: 'Subject of the email',
-                //     html: html,
-                //     // message_stream: messageStream
-                // };
-
-
-
+                // Gửi mail bằng outboud.send_email
                 outbound.send_email(from, to, message, (err, result) => {
                     if (err) {
                         console.error('Error sending email:', err);
@@ -73,7 +47,7 @@ exports.register = function() {
             })
         }
     });
-
+    // Nếu server chạy port 5000 thì đổi port API khác 
     server.on('error', (err) => {
         if (err.code === 'EADDRINUSE') {
             console.log('Port 5000 is already in use, trying a different port...');
@@ -82,7 +56,7 @@ exports.register = function() {
             console.error(err);
         }
     });
-
+    // Đổi port server cho API
     server.on('listening', () => {
         const address = server.address();
         console.log(`HTTP server listening on port ${address.port}`);
