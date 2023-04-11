@@ -1,33 +1,34 @@
-const outbound = require('./outbound');
+const nodemailer = require('nodemailer');
 
 // const from = 'sender@demo.akadigital.net';
 // const to = 'phucuong200297@gmail.com';
 // const subject = 'Test Email';
 // const body = 'This is a test email message.';
+const transporter = nodemailer.createTransport({
+    host: 'demo.akadigital.net',
+    port: 587,
+    secure: false,
 
+});
 var from = 'sender@demo.akadigital.net';
 var to = 'phucuong200297@gmail.com';
 var subject = 'Test Email C';
 var body = 'This is a test email message.';
 
 
-var contents = [
-    "From: " + from,
-    "To: " + to,
-    "MIME-Version: 1.0",
-    "Content-type: text/plain; charset=us-ascii",
-    "Subject:" + subject,
-    "",
-    body,
-    ""
-].join("\n");
+const mailOptions = {
+    from: from,
+    to: to,
+    subject: subject,
+    text: body,
+    html: '<p>HTML message</p>'
+};
 
-outbound.send_email(from, to, contents);
-// Send the email using outbound.sendmail
-// outbound.send_email(from, to, email, function(err, res) {
-//     if (err) {
-//         console.error(err);
-//     } else {
-//         console.log('Email sent successfully:', res);
-//     }
-// });
+
+transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('Email sent: ' + info.response);
+    }
+});
