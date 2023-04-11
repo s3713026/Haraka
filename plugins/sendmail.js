@@ -6,9 +6,12 @@ const nodemailer = require('nodemailer');
 // const body = 'This is a test email message.';
 const transporter = nodemailer.createTransport({
     host: 'demo.akadigital.net',
-    port: 587,
+    port: 25,
     secure: false,
-
+    auth: {
+        user: 'your-email@example.com',
+        pass: 'your-password'
+    }
 });
 var from = 'sender@demo.akadigital.net';
 var to = 'phucuong200297@gmail.com';
