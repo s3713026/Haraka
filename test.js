@@ -4,8 +4,8 @@ const nodemailer = require('nodemailer');
 console.log("Register run send mail");
 // Create a new Nodemailer transporter
 const transporter = nodemailer.createTransport({
-    // host: '158.101.137.14',
-    host: 'localhost',
+    host: '158.101.137.14',
+    // host: 'localhost',
     port: 25,
     secure: false,
     auth: {
