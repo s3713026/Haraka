@@ -72,7 +72,7 @@ var message = {
 };
 
 console.log('Sending Mail');
-transport.sendMail(message, function(error) {
+transporter.sendMail(message, function(error) {
     if (error) {
         console.log('Error occured');
         console.log(error.message);
