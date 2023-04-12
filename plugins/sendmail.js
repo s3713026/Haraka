@@ -9,7 +9,7 @@ exports.hook_queue = function(next, connection) {
 
     const transporter = nodemailer.createTransport({
         host: 'demo.akadigital.net',
-        port: 587,
+        port: 25,
         secure: false,
         tls: {
             rejectUnauthorized: false
