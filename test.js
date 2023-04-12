@@ -6,7 +6,7 @@ console.log("Register run send mail");
 const transporter = nodemailer.createTransport({
     // host: '158.101.137.14',
     host: 'demo.akadigital.net',
-    port: 5000,
+    port: 587,
     secure: false,
     auth: {
         user: 'username1',
@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 console.log(transporter)
-console.log(transporter.sendMail)
+
 
 // Create the email message
 const message = {
@@ -23,8 +23,8 @@ const message = {
     subject: 'Haraka server started',
     text: 'The Haraka server has started.'
 };
-
-// Send the email
+console.log(message)
+    // Send the email
 transporter.sendMail(message, (err, info) => {
     if (err) {
         console.log(err);
