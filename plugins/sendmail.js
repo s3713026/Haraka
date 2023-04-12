@@ -4,12 +4,13 @@ exports.register = function() {
     this.loginfo('Registering sendmail plugin');
     const transporter = nodemailer.createTransport({
         host: 'demo.akadigital.net',
-        port: 587,
+        port: 5000,
         secure: false,
         tls: {
             rejectUnauthorized: false
         }
     });
+
 
     const mailOptions = {
         from: 'aka@demo.akadigital.net',
