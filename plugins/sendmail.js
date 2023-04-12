@@ -10,7 +10,7 @@ exports.sendMail = function(next, connection) {
     const body = connection.transaction.body;
 
     let transporter = nodemailer.createTransport({
-        host: 'demo.akadigital.net',
+        host: 'localhost',
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
@@ -18,6 +18,7 @@ exports.sendMail = function(next, connection) {
             pass: 'password3' // your email password
         }
     });
+    su
 
     let mailOptions = {
         from: 'aka@demo.akadigital.net', // sender address
