@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 
-this.loginfo("Register run send mail");
+console.log("Register run send mail");
 // Create a new Nodemailer transporter
 const transporter = nodemailer.createTransport({
     // host: '158.101.137.14',
@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
         pass: 'akatestpassword'
     }
 });
-this.loginfo(transporter)
+console.log(transporter)
 
 // Create the email message
 const message = {
@@ -26,8 +26,8 @@ const message = {
 // Send the email
 transporter.sendMail(message, (err, info) => {
     if (err) {
-        this.loginfo(err);
+        console.log(err);
     } else {
-        this.loginfo('Email sent:', info.response);
+        console.log('Email sent:', info.response);
     }
 });
