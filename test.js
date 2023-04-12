@@ -1,37 +1,33 @@
 const nodemailer = require('nodemailer');
 
-// const from = 'sender@demo.akadigital.net';
-// const to = 'phucuong200297@gmail.com';
-// const subject = 'Test Email';
-// const body = 'This is a test email message.';
+
+this.loginfo("Register run send mail");
+// Create a new Nodemailer transporter
 const transporter = nodemailer.createTransport({
-    host: 'demo.akadigital.net',
+    // host: '158.101.137.14',
+    host: 'localhost',
     port: 25,
     secure: false,
     auth: {
-        user: 'cuong@demo.akadigital.com',
-        pass: 'password2'
+        user: 'username1',
+        pass: 'akatestpassword'
     }
 });
-var from = 'sender@demo.akadigital.net';
-var to = 'phucuong200297@gmail.com';
-var subject = 'Test Email C';
-var body = 'This is a test email message.';
+this.loginfo(transporter)
 
-
-const mailOptions = {
-    from: from,
-    to: to,
-    subject: subject,
-    text: body,
-    html: '<p>HTML message</p>'
+// Create the email message
+const message = {
+    from: 'sender@demo.akadigital.net',
+    to: 'phucuong200297@gmail.com',
+    subject: 'Haraka server started',
+    text: 'The Haraka server has started.'
 };
 
-
-transporter.sendMail(mailOptions, function(error, info) {
-    if (error) {
-        console.log(error);
+// Send the email
+transporter.sendMail(message, (err, info) => {
+    if (err) {
+        this.loginfo(err);
     } else {
-        console.log('Email sent: ' + info.response);
+        this.loginfo('Email sent:', info.response);
     }
 });
