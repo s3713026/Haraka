@@ -40,7 +40,7 @@ const nodemailer = require('nodemailer');
 
 
 // Create a SMTP transport object
-var transport = nodemailer.createTransport("SMTP", {
+var transport = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
         user: "test.nodemailer@gmail.com",
