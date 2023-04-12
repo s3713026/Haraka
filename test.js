@@ -14,6 +14,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 console.log(transporter)
+console.log(transporter.sendMail)
 
 // Create the email message
 const message = {
