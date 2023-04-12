@@ -8,10 +8,10 @@ const transporter = nodemailer.createTransport({
     host: 'demo.akadigital.net',
     port: 587,
     secure: false,
-    auth: {
-        user: 'username1',
-        pass: 'akatestpassword'
-    }
+    // auth: {
+    //     user: 'username1',
+    //     pass: 'akatestpassword'
+    // }
 });
 console.log(transporter)
 
