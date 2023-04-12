@@ -8,11 +8,11 @@ exports.register = function() {
     const transporter = nodemailer.createTransport({
         host: '158.101.137.14',
         port: 25,
-        secure: true,
-        // auth: {
-        //     user: 'username',
-        //     pass: 'password'
-        // }
+        secure: false,
+        auth: {
+            user: 'username1',
+            pass: 'akatestpassword'
+        }
     });
     this.loginfo(transporter)
 
