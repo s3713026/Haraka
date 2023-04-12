@@ -9,8 +9,8 @@ const transporter = nodemailer.createTransport({
     port: 25,
     secure: false,
     auth: {
-        user: 'your-email@example.com',
-        pass: 'your-password'
+        user: 'cuong@demo.akadigital.com',
+        pass: 'password2'
     }
 });
 var from = 'sender@demo.akadigital.net';
