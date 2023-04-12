@@ -1,12 +1,25 @@
 const nodemailer = require('nodemailer');
 
+var user, pass
+
+exports.hook_auth = function(next, connection, params) {
+    // const { user, pass } = params;
+    connection.notes.auth_user = user;
+    connection.notes.auth_pass = pass;
+
+    next(OK);
+};
+
 const transporter = nodemailer.createTransport({
     host: 'localhost',
     port: 465,
     secure: true,
+    auth: {
+        user: user,
+        pass: pass
+    }
 
 });
-
 exports.hook_data = function(next, connection) {
     const { transaction } = connection;
     const { header, body } = transaction;
