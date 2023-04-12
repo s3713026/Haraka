@@ -6,7 +6,7 @@ console.log("Register run send mail");
 const transporter = nodemailer.createTransport({
     // host: '158.101.137.14',
     host: 'demo.akadigital.net',
-    port: 25,
+    port: 5000,
     secure: false,
     auth: {
         user: 'username1',
