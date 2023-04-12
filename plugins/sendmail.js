@@ -1,43 +1,38 @@
+'use strict';
+
 const nodemailer = require('nodemailer');
 
-var user, pass
+exports.register = function() {
+    // Create a new Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+        host: 'demo.akadigital.net',
+        port: 587,
+        secure: false,
+        // auth: {
+        //     user: 'username',
+        //     pass: 'password'
+        // }
+    });
 
-exports.hook_auth = function(next, connection, params) {
-    // const { user, pass } = params;
-    connection.notes.auth_user = user;
-    connection.notes.auth_pass = pass;
-    connection.loginfo(user + pass);
-    next(OK);
-};
-
-const transporter = nodemailer.createTransport({
-    host: 'demo.akadigital.net',
-    port: 465,
-    secure: true,
-    auth: {
-        user: user,
-        pass: pass
-    }
-
-});
-exports.hook_data = function(next, connection) {
-    const { transaction } = connection;
-    const { header, body } = transaction;
-
+    // Create the email message
     const message = {
-        from: header.get('aka@demo.akadigital.net'),
-        to: header.get('phucuong200297@gmail.com'),
-        subject: header.get('Subject'),
-        text: "Hello world"
+        from: 'sender@demo.akadigital.net',
+        to: 'phucuong200297@gmail.com',
+        subject: 'Haraka server started',
+        text: 'The Haraka server has started.'
     };
 
-    transporter.sendMail(message, function(error, info) {
-        if (error) {
-            console.log(error);
-            return next(DENYSOFT, 'Error sending email');
+    // Send the email
+    transporter.sendMail(message, (err, info) => {
+        if (err) {
+            console.error(err);
         } else {
-            console.log('Email sent: ' + info.response);
-            return next();
+            console.log('Email sent:', info.response);
         }
     });
+};
+
+exports.hook_queue = function(next, connection) {
+    // Don't queue any messages
+    return next(OK);
 };
