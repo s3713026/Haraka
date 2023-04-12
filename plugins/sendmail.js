@@ -1,41 +1,38 @@
-'use strict';
-
 const nodemailer = require('nodemailer');
 
 exports.register = function() {
-    this.loginfo("Register run send mail");
-    // Create a new Nodemailer transporter
-    const transporter = nodemailer.createTransport({
-        // host: '158.101.137.14',
-        host: 'localhost',
-        port: 25,
-        secure: false,
+    this.logdebug("registering the sendMail plugin");
+
+    this.register_hook('queue', 'sendMail');
+}
+
+exports.sendMail = function(next, connection) {
+    const body = connection.transaction.body;
+
+    let transporter = nodemailer.createTransport({
+        host: 'demo.akadigital.net',
+        port: 587,
+        secure: false, // true for 465, false for other ports
         auth: {
-            user: 'username1',
-            pass: 'akatestpassword'
+            user: 'cuong.truong@akadigital.vn', // your email address
+            pass: 'password3' // your email password
         }
     });
-    this.loginfo(transporter)
 
-    // Create the email message
-    const message = {
-        from: 'sender@demo.akadigital.net',
-        to: 'phucuong200297@gmail.com',
-        subject: 'Haraka server started',
-        text: 'The Haraka server has started.'
+    let mailOptions = {
+        from: 'aka@demo.akadigital.net', // sender address
+        to: body.header.to, // recipient address
+        subject: body.header.subject, // Subject line
+        text: body.bodytext, // plain text body
+        html: body.bodytext // html body
     };
 
-    // Send the email
-    transporter.sendMail(message, (err, info) => {
-        if (err) {
-            this.loginfo(err);
-        } else {
-            this.loginfo('Email sent:', info.response);
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            this.logerror(error);
+            return next(DENY, "Error sending email");
         }
+        this.loginfo('Message sent: %s', info.messageId);
+        return next(OK);
     });
-};
-
-exports.hook_queue = function(next, connection) {
-    // Don't queue any messages
-    return next(OK);
 };
