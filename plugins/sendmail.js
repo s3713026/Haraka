@@ -6,7 +6,7 @@ exports.hook_auth = function(next, connection, params) {
     // const { user, pass } = params;
     connection.notes.auth_user = user;
     connection.notes.auth_pass = pass;
-
+    connection.loginfo(user + pass);
     next(OK);
 };
 
