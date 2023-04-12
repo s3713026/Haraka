@@ -23,8 +23,8 @@ const message = {
     subject: 'Haraka server started',
     text: 'The Haraka server has started.'
 };
-console.log(message)
-    // Send the email
+
+// Send the email
 transporter.sendMail(message, (err, info) => {
     if (err) {
         console.log(err);
