@@ -8,7 +8,7 @@ exports.hook_queue = function(next, connection) {
     const recipients = connection.transaction.rcpt_to.map(to => to.address());
 
     const transporter = nodemailer.createTransport({
-        host: 'your-smtp-hostname',
+        host: 'demo.akadigital.net',
         port: 587,
         secure: false,
         tls: {
