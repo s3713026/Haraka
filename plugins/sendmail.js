@@ -40,11 +40,12 @@ const nodemailer = require('nodemailer');
 
 
 // Create a SMTP transport object
-var transport = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: "test.nodemailer@gmail.com",
-        pass: "Nodemailer123"
+const transporter = nodemailer.createTransport({
+    host: 'localhost',
+    port: 587,
+    secure: false,
+    tls: {
+        rejectUnauthorized: false
     }
 });
 
