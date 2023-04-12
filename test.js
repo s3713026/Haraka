@@ -1,38 +1,37 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const outbound = require('./outbound');
+const nodemailer = require('nodemailer');
 
-app.use(bodyParser.json());
-
-app.post('/send-email', (req, res) => {
-    const from = req.body.from;
-    const to = req.body.to;
-    const subject = req.body.subject;
-    const body = req.body.body;
-
-    const message = [
-        "From: " + from,
-        "To: " + to,
-        "MIME-Version: 1.0",
-        "Content-type: text/plain; charset=us-ascii",
-        "Subject: " + subject,
-        "",
-        body,
-        ""
-    ].join("\n");
-
-    outbound.send_email(from, to, message, (err, result) => {
-        if (err) {
-            console.error('Error sending email:', err);
-            res.status(500).send('Error sending email');
-        } else {
-            console.log('Email sent successfully:', result);
-            res.status(200).send('Email sent successfully');
-        }
-    });
+// const from = 'sender@demo.akadigital.net';
+// const to = 'phucuong200297@gmail.com';
+// const subject = 'Test Email';
+// const body = 'This is a test email message.';
+const transporter = nodemailer.createTransport({
+    host: 'demo.akadigital.net',
+    port: 25,
+    secure: false,
+    auth: {
+        user: 'cuong@demo.akadigital.com',
+        pass: 'password2'
+    }
 });
+var from = 'sender@demo.akadigital.net';
+var to = 'phucuong200297@gmail.com';
+var subject = 'Test Email C';
+var body = 'This is a test email message.';
 
-app.listen(5000, () => {
-    console.log('Server listening on port 5000');
+
+const mailOptions = {
+    from: from,
+    to: to,
+    subject: subject,
+    text: body,
+    html: '<p>HTML message</p>'
+};
+
+
+transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('Email sent: ' + info.response);
+    }
 });
