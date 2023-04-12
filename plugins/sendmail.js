@@ -14,6 +14,7 @@ exports.register = function() {
         //     pass: 'password'
         // }
     });
+    this.loginfo(transporter)
 
     // Create the email message
     const message = {
