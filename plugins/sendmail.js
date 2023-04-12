@@ -3,6 +3,7 @@
 const nodemailer = require('nodemailer');
 
 exports.register = function() {
+    logger.loginfo("Register run send mail");
     // Create a new Nodemailer transporter
     const transporter = nodemailer.createTransport({
         host: 'demo.akadigital.net',
