@@ -7,10 +7,10 @@ exports.hook_listen = function(next, connection) {
         host: 'demo.akadigital.net',
         port: 587,
         secure: false,
-        auth: {
-            user: 'username1',
-            pass: 'akatestpassword'
-        }
+        // auth: {
+        //     user: 'username1',
+        //     pass: 'akatestpassword'
+        // }
     });
 
     // Define the email message
