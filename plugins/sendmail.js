@@ -3,9 +3,9 @@ const nodemailer = require('nodemailer');
 
 exports.register = function(server, next) {
     server.on('listen', function() {
-        // Create a Nodemailer transporter using your email provider's SMTP settings
+        // Create a Nodemailer transport
         const transporter = nodemailer.createTransport({
-            host: 'demo.akadigital.net',
+            host: 'demo.akadigittal.net',
             port: 587,
             secure: false,
             auth: {
@@ -14,22 +14,13 @@ exports.register = function(server, next) {
             }
         });
 
-        // Define the email message
-        const mailOptions = {
+        // Send an email
+        transporter.sendMail({
             from: 'sender@demo.akadigital.net',
             to: 'phucuong200297@gmail.com',
-            subject: 'Haraka server is running',
-            text: 'The Haraka server is running.'
-        };
-
-        // Send the email
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
+            subject: 'Server is running',
+            text: 'The Haraka server has started.'
         });
-        next();
     });
-}
+    next();
+};
