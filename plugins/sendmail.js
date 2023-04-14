@@ -1,30 +1,33 @@
 const nodemailer = require('nodemailer');
 
-exports.hook_init_master = function(next, connection) {
-    // Create a nodemailer transport object
+function sendMail() {
+    // Create a Nodemailer transporter using your email provider's SMTP settings
     const transporter = nodemailer.createTransport({
-        // Replace the host, port, user, and password with your SMTP server details
-        host: 'demo.akadigital.net',
+        host: 'smtp.example.com',
         port: 587,
         secure: false,
-    });
-
-    // Create a mail options object
-    const mailOptions = {
-        from: 'sender@demo.akadigital.net',
-        to: 'phucuong200297@gmail.com',
-        subject: 'Haraka server started',
-        text: 'The Haraka server has started running',
-    };
-
-    // Send the email
-    transporter.sendMail(mailOptions, function(error, info) {
-        if (error) {
-            this.loginfo(error);
-        } else {
-            this.loginfo('Email sent: ' + info.response);
+        auth: {
+            user: 'user@example.com',
+            pass: 'password'
         }
     });
 
-    next();
-};
+    // Define the email message
+    const mailOptions = {
+        from: 'sender@example.com',
+        to: 'recipient@example.com',
+        subject: 'Haraka server is running',
+        text: 'The Haraka server is running.'
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
+
+module.exports = sendMail;
