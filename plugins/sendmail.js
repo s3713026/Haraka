@@ -5,6 +5,7 @@ const nodemailer = require('nodemailer');
 // sử dụng để chạy API bằng http 
 const http = require('http');
 const { stringify } = require('querystring');
+const harakaTransport = require('nodemailer-haraka-transport');
 
 
 exports.register = function() {
@@ -23,7 +24,7 @@ exports.register = function() {
                 const { from, to, subject, text, html } = data;
                 res.end(stringify(data));
                 // Messeage gửi mail với thông tin từ API
-                const transporter = nodemailer.createTransport({
+                const transporter = nodemailer.createTransport(harakaTransport({
                     host: 'localhost',
                     port: 25,
                     secure: false,
@@ -34,8 +35,13 @@ exports.register = function() {
                     secureConnection: true,
                     tls: {
                         rejectUnauthorized: false
+                    },
+                    dkim: {
+                        domainName: 'demo.akadigital.net',
+                        keySelector: 'aka',
+                        privateKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDwtqMrICONGCziy48LiB7340IPhaiZI5V7+wLNLEZQiKDAoW3sJWvDBOrYcRPfaoYJ9FcF0v6wzTisSNSmmzX6jTx2c/1NQl9BhZfrPEYB+YOVm8cnHkYytWBhgzt3nz5e2IThy3PquDjiZy69hzhd73KOutNHetXMxegY7QYuZQIDAQAB'
                     }
-                });
+                }));
 
                 // Send an email
                 transporter.sendMail({
