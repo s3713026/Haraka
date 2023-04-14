@@ -39,7 +39,7 @@ exports.register = function() {
                     dkim: {
                         domainName: "demo.akadigital.net",
                         keySelector: "aka",
-                        privateKey: fs.readFileSync("/config/private.key")
+                        privateKey: fs.readFileSync("./config/private.key")
                     }
                 });
 
