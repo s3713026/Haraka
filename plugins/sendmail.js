@@ -25,12 +25,12 @@ exports.register = function() {
                 // Messeage gửi mail với thông tin từ API
                 const transporter = nodemailer.createTransport({
                     host: 'localhost',
-                    port: 587,
+                    port: 25,
                     secure: false,
-                    // auth: {
-                    //     user: 'username1',
-                    //     pass: 'akatestpassword'
-                    // }
+                    auth: {
+                        user: 'username1',
+                        pass: 'akatestpassword'
+                    }
                 });
 
                 // Send an email
