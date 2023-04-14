@@ -33,7 +33,7 @@ exports.sendMail = function(next, connection) {
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            this.logerror(error);
+            this.logdebug(error);
             return next(DENY, "Error sending email");
         }
         this.loginfo('Message sent: %s', info.messageId);
