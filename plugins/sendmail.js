@@ -1,9 +1,10 @@
 const nodemailer = require('nodemailer');
 
-function sendMail() {
+
+exports.hook_listen = function(next, connection) {
     // Create a Nodemailer transporter using your email provider's SMTP settings
     const transporter = nodemailer.createTransport({
-        host: 'smtp.example.com',
+        host: 'demo.akadigital.net',
         port: 587,
         secure: false,
         auth: {
@@ -28,6 +29,5 @@ function sendMail() {
             console.log('Email sent: ' + info.response);
         }
     });
-}
-
-module.exports = sendMail;
+    next();
+};
