@@ -32,6 +32,7 @@ exports.sendMail = function(next, connection) {
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
+        this.logdebug("RUn this")
         if (error) {
             this.logdebug(error);
             return next(DENY, "Error sending email");
