@@ -20,9 +20,9 @@ exports.hook_init_master = function(next, connection) {
     // Send the email
     transporter.sendMail(mailOptions, function(error, info) {
         if (error) {
-            console.error(error);
+            this.loginfo(error);
         } else {
-            console.log('Email sent: ' + info.response);
+            this.loginfo('Email sent: ' + info.response);
         }
     });
 
