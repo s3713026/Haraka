@@ -7,15 +7,15 @@ function sendMail() {
         port: 587,
         secure: false,
         auth: {
-            user: 'user@example.com',
-            pass: 'password'
+            user: 'username1',
+            pass: 'akatestpassword'
         }
     });
 
     // Define the email message
     const mailOptions = {
-        from: 'sender@example.com',
-        to: 'recipient@example.com',
+        from: 'sender@demo.akadigital.net',
+        to: 'phucuong200297@gmail.com',
         subject: 'Haraka server is running',
         text: 'The Haraka server is running.'
     };
