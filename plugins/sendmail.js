@@ -19,7 +19,7 @@ exports.register = function() {
         req.on('end', async() => {
             const transporter = nodemailer.createTransport({
                 host: 'demo.akadigital.net',
-                port: server.listen(0),
+                port: 587,
                 secure: false,
                 auth: {
                     user: 'username1',
