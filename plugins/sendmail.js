@@ -12,8 +12,8 @@ exports.sendmail = function(next) {
         port: 465,
         secure: true,
         auth: {
-            user: 'youremail@gmail.com',
-            pass: 'yourpassword'
+            user: 'username1',
+            pass: 'akatestpassword'
         }
     });
 
