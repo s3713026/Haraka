@@ -10,9 +10,10 @@ exports.register = function() {
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
-        // Khi Api post và có source là /api/send-email thì gửi mail
-        // server.on('listen', function() {
-        // Create a Nodemailer transport
+        console.log('hello')
+            // Khi Api post và có source là /api/send-email thì gửi mail
+            // server.on('listen', function() {
+            // Create a Nodemailer transport
         req.on('data', (chunk) => {
             body += chunk.toString();
         });
