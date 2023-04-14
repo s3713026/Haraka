@@ -22,10 +22,13 @@ exports.sendMail = function(next, connection) {
 
     let mailOptions = {
         from: 'aka@demo.akadigital.net', // sender address
-        to: body.header.to, // recipient address
-        subject: body.header.subject, // Subject line
-        text: body.bodytext, // plain text body
-        html: body.bodytext // html body
+        // to: body.header.to, // recipient address
+        // subject: body.header.subject, // Subject line
+        // text: body.bodytext, // plain text body
+        // html: body.bodytext // html body
+        to: 'phucuong200297@gmail.com',
+        subject: 'Cái này để test',
+        text: 'bodymail nè'
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
