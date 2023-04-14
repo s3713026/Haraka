@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer');
 exports.hook_listen = function(next, connection) {
     // Create a Nodemailer transporter using your email provider's SMTP settings
     const transporter = nodemailer.createTransport({
-        host: 'localhost',
+        host: 'demo.akadigital.net',
         port: 587,
         secure: false,
         auth: {
