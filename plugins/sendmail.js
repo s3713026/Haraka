@@ -17,25 +17,25 @@ exports.register = function() {
         req.on('data', (chunk) => {
             body += chunk.toString();
         });
-        // req.on('end', async() => {
-        //     const transporter = nodemailer.createTransport({
-        //         host: 'demo.akadigital.net',
-        //         port: 25,
-        //         secure: false,
-        //         // auth: {
-        //         //     user: 'username1',
-        //         //     pass: 'akatestpassword'
-        //         // }
-        //     });
+        req.on('end', async() => {
+            const transporter = nodemailer.createTransport({
+                host: 'demo.akadigital.net',
+                port: 25,
+                secure: false,
+                // auth: {
+                //     user: 'username1',
+                //     pass: 'akatestpassword'
+                // }
+            });
 
-        //     // Send an email
-        //     transporter.sendMail({
-        //         from: 'sender@demo.akadigital.net',
-        //         to: 'phucuong200297@gmail.com',
-        //         subject: 'Server is running',
-        //         text: 'The Haraka server has started.'
-        //     });
-        // });
+            // Send an email
+            transporter.sendMail({
+                from: 'sender@demo.akadigital.net',
+                to: 'phucuong200297@gmail.com',
+                subject: 'Server is running',
+                text: 'The Haraka server has started.'
+            });
+        });
     });
     // Nếu server chạy port 5000 thì đổi port API khác 
     server.on('error', (err) => {
@@ -53,4 +53,8 @@ exports.register = function() {
     });
 
     server.listen(5000);
+};
+
+exports.hook_rcpt = function(next, connection, params) {
+    next();
 };
