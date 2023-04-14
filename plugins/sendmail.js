@@ -27,10 +27,10 @@ exports.register = function() {
                     host: 'localhost',
                     port: 25,
                     secure: false,
-                    auth: {
-                        user: 'username1',
-                        pass: 'akatestpassword'
-                    }
+                    // auth: {
+                    //     user: 'username1',
+                    //     pass: 'akatestpassword'
+                    // }
                 });
 
                 // Send an email
