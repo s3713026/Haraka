@@ -45,10 +45,11 @@ exports.register = function() {
 
                 // Send an email
                 transporter.sendMail({
-                    from: 'sender@demo.akadigital.net',
-                    to: 'phucuong200297@gmail.com',
-                    subject: 'Server is running',
-                    text: 'The Haraka server has started.'
+                    from: from,
+                    to: to,
+                    subject: subject,
+                    text: text,
+                    html: html
                 });
 
             })
