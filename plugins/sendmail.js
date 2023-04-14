@@ -34,7 +34,7 @@ exports.register = function() {
                     },
                     secureConnection: true,
                     tls: {
-                        rejectUnauthorized: true
+                        rejectUnauthorized: false
                     },
                     dkim: {
                         domainName: "demo.akadigital.net",
