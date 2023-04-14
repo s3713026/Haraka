@@ -1,8 +1,17 @@
 const nodemailer = require('nodemailer');
 
+// sử dụng để chạy API bằng http 
+const http = require('http');
+const { stringify } = require('querystring');
 
-exports.register = function(server, next) {
-    server.on('listen', function() {
+
+exports.register = function() {
+    //Tạo server cho API gửi email
+    const server = http.createServer((req, res) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/plain');
+        // Khi Api post và có source là /api/send-email thì gửi mail
+        // server.on('listen', function() {
         // Create a Nodemailer transport
         const transporter = nodemailer.createTransport({
             host: 'demo.akadigittal.net',
@@ -21,6 +30,22 @@ exports.register = function(server, next) {
             subject: 'Server is running',
             text: 'The Haraka server has started.'
         });
+        // });
     });
-    next();
+    // Nếu server chạy port 5000 thì đổi port API khác 
+    server.on('error', (err) => {
+        if (err.code === 'EADDRINUSE') {
+            console.log('Port 5000 is already in use, trying a different port...');
+            server.listen(0);
+        } else {
+            console.error(err);
+        }
+    });
+    // Đổi port server cho API
+    server.on('listening', () => {
+        const address = server.address();
+        console.log(`HTTP server listening on port ${address.port}`);
+    });
+
+    server.listen(5000);
 };
