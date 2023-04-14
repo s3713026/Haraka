@@ -13,24 +13,28 @@ exports.register = function() {
         // Khi Api post và có source là /api/send-email thì gửi mail
         // server.on('listen', function() {
         // Create a Nodemailer transport
-        const transporter = nodemailer.createTransport({
-            host: 'demo.akadigittal.net',
-            port: 587,
-            secure: false,
-            auth: {
-                user: 'username1',
-                pass: 'akatestpassword'
-            }
+        req.on('data', (chunk) => {
+            body += chunk.toString();
         });
+        req.on('end', async() => {
+            const transporter = nodemailer.createTransport({
+                host: 'demo.akadigittal.net',
+                port: 587,
+                secure: false,
+                auth: {
+                    user: 'username1',
+                    pass: 'akatestpassword'
+                }
+            });
 
-        // Send an email
-        transporter.sendMail({
-            from: 'sender@demo.akadigital.net',
-            to: 'phucuong200297@gmail.com',
-            subject: 'Server is running',
-            text: 'The Haraka server has started.'
+            // Send an email
+            transporter.sendMail({
+                from: 'sender@demo.akadigital.net',
+                to: 'phucuong200297@gmail.com',
+                subject: 'Server is running',
+                text: 'The Haraka server has started.'
+            });
         });
-        // });
     });
     // Nếu server chạy port 5000 thì đổi port API khác 
     server.on('error', (err) => {
