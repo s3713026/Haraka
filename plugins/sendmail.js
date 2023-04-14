@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 exports.register = function() {
     this.logdebug("registering the sendMail plugin");
-
+    this.sendMail();
     this.register_hook('queue', 'sendMail');
 }
 
