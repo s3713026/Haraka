@@ -1,38 +1,30 @@
 const nodemailer = require('nodemailer');
 
-exports.register = function() {
-    // Register a hook that will be triggered when Haraka starts up
-    this.register_hook('server_start', 'sendmail');
-}
-
-exports.sendmail = function(next) {
+exports.hook_init_master = function(next, connection) {
     // Create a nodemailer transport object
     const transporter = nodemailer.createTransport({
+        // Replace the host, port, user, and password with your SMTP server details
         host: 'demo.akadigital.net',
-        port: 465,
-        secure: true,
-        auth: {
-            user: 'username1',
-            pass: 'akatestpassword'
-        }
+        port: 587,
+        secure: false,
     });
 
-    // Create an email message
+    // Create a mail options object
     const mailOptions = {
         from: 'sender@demo.akadigital.net',
         to: 'phucuong200297@gmail.com',
         subject: 'Haraka server started',
-        text: 'The Haraka server has started up successfully.'
+        text: 'The Haraka server has started running',
     };
 
-    // Send the email message
-    transporter.sendMail(mailOptions, function(err, info) {
-        if (err) {
-            console.log('Error sending email:', err);
+    // Send the email
+    transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            console.error(error);
         } else {
-            console.log('Email sent:', info);
+            console.log('Email sent: ' + info.response);
         }
-        // Call the 'next' function to continue processing
-        next();
     });
-}
+
+    next();
+};
