@@ -25,7 +25,7 @@ exports.register = function() {
                 res.end(stringify(data));
                 // Messeage gửi mail với thông tin từ API
                 const transporter = nodemailer.createTransport({
-                    host: 'demo.akadigital.net',
+                    host: 'localhost',
                     port: 25,
                     secure: false,
                     auth: {
