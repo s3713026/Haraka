@@ -499,8 +499,7 @@ if (parsed.version) {
     }
     const server = {
         address() {
-            // return { port: 25, family: 'ipv4', address: '127.0.0.1' };
-            return { port: 25, family: 'ipv4', address: '158.101.137.14' };
+            return { port: 25, family: 'ipv4', address: '127.0.0.1' };
         },
         notes: new Notes(),
     }
