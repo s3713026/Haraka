@@ -8,7 +8,7 @@ app.post('/api/send-email', (req, res) => {
 
     res.setHeader('Content-Type', 'text/plain');
     const transporter = nodemailer.createTransport({
-        host: 'demo.akadigital.net',
+        host: 'localhost',
         port: 25,
         secure: false,
         auth: {
