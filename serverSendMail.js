@@ -59,6 +59,6 @@ app.post('/api/send-email', (req, res) => {
 });
 
 
-app.listen(1337, () => {
-    console.log('Server started on port 1337');
+app.listen(3000, () => {
+    console.log('Server started on port 3000');
 });
