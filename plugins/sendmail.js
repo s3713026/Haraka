@@ -42,15 +42,19 @@ exports.register = function() {
                         privateKey: fs.readFileSync("./config/private.key")
                     }
                 });
-
+                const recipients = [to];
                 // Send an email
-                transporter.sendMail({
-                    from: from,
-                    to: to,
-                    subject: subject,
-                    text: text,
-                    html: html
-                });
+                for (let i = 0; i < recipients.length; i++) {
+                    // Send the mail
+                    transporter.sendMail({
+                        from: from,
+                        to: recipients[i],
+                        subject: subject,
+                        text: text,
+                        html: html
+                    });
+                }
+
 
             })
         }
