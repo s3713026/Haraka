@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-
+const amp = require('nodemailer-amp');
 
 // const outbound = require('./outbound');
 // sử dụng để chạy API bằng http 
@@ -23,6 +23,7 @@ exports.register = function() {
                 const data = JSON.parse(body);
                 const { from, to, subject, text, html } = data;
                 res.end(stringify(data));
+
                 // Messeage gửi mail với thông tin từ API
                 const transporter = nodemailer.createTransport({
                     host: 'localhost',
@@ -42,6 +43,7 @@ exports.register = function() {
                         privateKey: fs.readFileSync("./config/private.key")
                     }
                 });
+                transporter.use('compile', amp());
                 const recipients = [to];
                 // Send an email
                 for (let i = 0; i < recipients.length; i++) {
