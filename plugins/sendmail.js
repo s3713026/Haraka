@@ -12,7 +12,8 @@ exports.register = function() {
     //Tạo server cho API gửi email
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
+        // res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Type', 'text/x-amp-html');
         // Khi Api post và có source là /api/send-email thì gửi mail
         if (req.method === 'POST' && req.url === '/api/send-email') {
             let body = '';
